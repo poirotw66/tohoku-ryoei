@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東北旅繪 — 家族精華之旅</title>
+  <meta name="description" content="2026 年 8 月 13–19 日家族行程：仙台、松島、鳴子溫泉、猊鼻溪、盛岡、輕井澤、東京。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a2a28;
+      --fog: #e8f0ee;
+      --pine: #2d5a4a;
+      --pine-deep: #1e3d34;
+      --mist: #7a9e94;
+      --gold: #c4a574;
+      --gold-soft: #e8d5b5;
+      --steam: #f2f7f5;
+      --paper: #f7faf8;
+      --coral: #c45c4a;
+      --day-line: rgba(45, 90, 74, 0.18);
+      --font-display: "Shippori Mincho", "Noto Serif CJK JP", serif;
+      --font-body: "Noto Sans TC", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .nav {
+      position: fixed; inset: 0 0 auto; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    .nav.is-scrolled {
+      background: rgba(247, 250, 248, 0.9);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(26, 42, 40, 0.06);
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--steam); transition: color 0.3s;
+    }
+    .nav.is-scrolled .nav-brand { color: var(--pine-deep); }
+    .nav-links {
+      display: none; gap: 1.5rem; list-style: none;
+      font-size: 0.88rem; font-weight: 500;
+    }
+    .nav-links a { color: rgba(242, 247, 245, 0.85); }
+    .nav.is-scrolled .nav-links a { color: var(--mist); }
+    .nav-links a:hover { color: var(--gold); }
+    @media (min-width: 768px) {
+      .nav { padding: 1.1rem 3rem; }
+      .nav-links { display: flex; }
+    }
+
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      color: var(--steam); isolation: isolate;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: -2;
+      background:
+        linear-gradient(180deg, rgba(26,42,40,0.2) 0%, rgba(26,42,40,0.5) 40%, rgba(14,28,26,0.92) 100%),
+        url("images/matsushima2.jpg") center / cover no-repeat;
+      animation: hero-drift 28s ease-in-out infinite alternate;
+    }
+    @keyframes hero-drift {
+      from { transform: scale(1.04); }
+      to { transform: scale(1.1) translate(-1%, 1%); }
+    }
+    .hero-inner {
+      padding: 0 1.5rem 4.5rem; max-width: 44rem;
+      animation: fade-up 1s ease-out both;
+    }
+    @media (min-width: 768px) { .hero-inner { padding: 0 3rem 5.5rem; } }
+    .hero-brand {
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 8vw, 5rem);
+      font-weight: 700; letter-spacing: 0.06em; line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+    .hero-lead {
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      opacity: 0.88; max-width: 28rem; margin-bottom: 1.5rem;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem;
+      font-size: 0.85rem; opacity: 0.75; margin-bottom: 2rem;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.85rem 1.6rem; font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.06em; border: none; cursor: pointer;
+      transition: transform 0.25s, background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--gold); color: var(--ink); }
+    .btn-primary:hover { background: var(--gold-soft); }
+    .btn-ghost {
+      background: transparent; color: var(--steam);
+      border: 1px solid rgba(242, 247, 245, 0.35);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .overview {
+      background: linear-gradient(135deg, var(--pine-deep), #2a5045 50%, #3a6354);
+      color: var(--steam); padding: 3rem 1.5rem;
+    }
+    .overview-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; gap: 1.5rem;
+    }
+    @media (min-width: 700px) {
+      .overview-inner { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat-num {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 700;
+      color: var(--gold-soft);
+    }
+    .stat-label { font-size: 0.85rem; opacity: 0.8; margin-top: 0.2rem; }
+
+    .section {
+      padding: 4.5rem 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    @media (min-width: 768px) { .section { padding: 5.5rem 3rem; } }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--mist); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700; color: var(--pine-deep); margin-bottom: 0.65rem;
+    }
+    .section-lead { color: var(--mist); max-width: 36rem; margin-bottom: 2rem; }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 1rem; }
+    table.summary {
+      width: 100%; border-collapse: collapse; font-size: 0.9rem;
+      min-width: 640px;
+    }
+    table.summary th {
+      text-align: left; padding: 0.85rem 1rem;
+      background: var(--fog); color: var(--mist);
+      font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 700;
+    }
+    table.summary td {
+      padding: 1rem; border-bottom: 1px solid var(--day-line);
+      vertical-align: top;
+    }
+    table.summary tr:hover td { background: rgba(45, 90, 74, 0.04); }
+    table.summary .d { font-weight: 700; color: var(--pine); white-space: nowrap; }
+    table.summary .hot .d { color: var(--coral); }
+    .stay {
+      display: inline-block; margin-top: 0.35rem;
+      font-size: 0.75rem; color: var(--mist); font-weight: 500;
+    }
+
+    .day-jump {
+      display: flex; gap: 0.4rem; overflow-x: auto;
+      padding-bottom: 0.5rem; margin: 2rem 0 0.5rem;
+    }
+    .day-jump a {
+      flex: 0 0 auto; padding: 0.5rem 0.95rem;
+      font-size: 0.82rem; font-weight: 700;
+      border: 1px solid var(--day-line); color: var(--mist);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .day-jump a:hover {
+      background: var(--pine); border-color: var(--pine); color: var(--steam);
+    }
+
+    .detail {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--day-line);
+      scroll-margin-top: 5rem;
+    }
+    .detail:last-of-type { border-bottom: none; }
+    .detail-head {
+      display: grid; gap: 1rem; margin-bottom: 1.75rem;
+      align-items: end;
+    }
+    @media (min-width: 700px) {
+      .detail-head { grid-template-columns: auto 1fr; gap: 1.5rem; }
+    }
+    .detail-num {
+      font-family: var(--font-display);
+      font-size: 3.2rem; font-weight: 700; line-height: 1;
+      color: var(--pine);
+    }
+    .detail-date { font-size: 0.85rem; color: var(--mist); margin-top: 0.3rem; }
+    .detail-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--pine-deep); font-weight: 700;
+    }
+    .detail-sub { color: var(--mist); font-size: 0.95rem; margin-top: 0.25rem; }
+
+    .photo-hero {
+      position: relative; overflow: hidden;
+      aspect-ratio: 21 / 9; min-height: 200px; margin-bottom: 1.75rem;
+      background: var(--fog);
+    }
+    .photo-hero img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .detail:hover .photo-hero img { transform: scale(1.03); }
+    .photo-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 1.25rem 1.25rem 1rem;
+      background: linear-gradient(transparent, rgba(14, 28, 26, 0.75));
+      color: var(--steam); font-size: 0.85rem; font-weight: 500;
+    }
+
+    .photo-grid {
+      display: grid; gap: 0.75rem; margin-bottom: 1.75rem;
+    }
+    @media (min-width: 640px) {
+      .photo-grid { grid-template-columns: 1.4fr 1fr; }
+    }
+    .photo-grid figure {
+      position: relative; overflow: hidden; background: var(--fog);
+      aspect-ratio: 4 / 3;
+    }
+    .photo-grid figure:first-child { aspect-ratio: auto; min-height: 220px; }
+    @media (min-width: 640px) {
+      .photo-grid figure:first-child { grid-row: span 2; aspect-ratio: auto; height: 100%; min-height: 0; }
+    }
+    .photo-grid img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .photo-grid figure:hover img { transform: scale(1.04); }
+    .photo-grid figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(transparent, rgba(14, 28, 26, 0.7));
+      color: var(--steam); font-size: 0.78rem;
+    }
+
+    .timeline { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .timeline li {
+      display: grid; grid-template-columns: 5.5rem 1fr;
+      gap: 1rem; padding: 1rem 0;
+      border-top: 1px solid var(--day-line);
+    }
+    @media (min-width: 640px) {
+      .timeline li { grid-template-columns: 7rem 1fr; gap: 1.5rem; }
+    }
+    .t-time {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--gold); padding-top: 0.15rem;
+    }
+    .t-title {
+      font-family: var(--font-display); font-size: 1.1rem;
+      color: var(--pine-deep); margin-bottom: 0.25rem;
+    }
+    .t-body { font-size: 0.9rem; color: #3d524c; }
+    .t-tip {
+      margin-top: 0.45rem; font-size: 0.82rem; color: var(--coral); font-weight: 500;
+    }
+
+    .food-strip {
+      background: var(--fog); padding: 4.5rem 1.5rem;
+    }
+    .food-inner { max-width: 1100px; margin: 0 auto; }
+    .food-grid {
+      display: grid; gap: 2rem;
+    }
+    @media (min-width: 700px) {
+      .food-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .food-item figure {
+      aspect-ratio: 4/3; overflow: hidden; margin-bottom: 1rem; background: #dce8e4;
+    }
+    .food-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s;
+    }
+    .food-item:hover img { transform: scale(1.05); }
+    .food-when {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: var(--coral);
+    }
+    .food-name {
+      font-family: var(--font-display); font-size: 1.2rem;
+      color: var(--pine-deep); margin: 0.3rem 0;
+    }
+    .food-desc { font-size: 0.88rem; color: #4a5e58; }
+    .food-loc { margin-top: 0.5rem; font-size: 0.78rem; color: var(--mist); }
+
+    .tips-wrap { display: grid; gap: 1rem; }
+    @media (min-width: 700px) { .tips-wrap { grid-template-columns: 1fr 1fr; } }
+    .tip { padding: 1.25rem 0; border-top: 1px solid var(--day-line); }
+    .tip h3 {
+      font-family: var(--font-display); font-size: 1.1rem;
+      color: var(--pine-deep); margin-bottom: 0.35rem;
+    }
+    .tip p { font-size: 0.9rem; color: #4a5e58; }
+
+    .photo-credit {
+      font-size: 0.72rem; color: var(--mist); margin-top: 2rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: var(--ink); color: rgba(242, 247, 245, 0.7);
+      text-align: center; padding: 3rem 1.5rem; font-size: 0.9rem;
+    }
+    footer strong {
+      display: block; font-family: var(--font-display);
+      font-size: 1.2rem; color: var(--gold-soft); margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" aria-label="主選單">
+    <a class="nav-brand" href="#">東北旅繪</a>
+    <ul class="nav-links">
+      <li><a href="#summary">總表</a></li>
+      <li><a href="#day1">每日細項</a></li>
+      <li><a href="#food">美食</a></li>
+      <li><a href="#tips">提醒</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1 class="hero-brand">東北旅繪</h1>
+      <p class="hero-lead">依你家既定行程整理的七日導覽——松島海灣、鳴子溫泉、猊鼻溪到東京，每天細項與實景照片一次看完。</p>
+      <div class="hero-meta">
+        <span>2026.08.13 – 08.19</span>
+        <span>華航 高雄 ⇄ 東京</span>
+        <span>7 天 6 夜</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#summary">行程總表</a>
+        <a class="btn btn-ghost" href="#day1">從第一天開始</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="overview" aria-label="概要">
+    <div class="overview-inner">
+      <div><div class="stat-num">7</div><div class="stat-label">天 6 夜</div></div>
+      <div><div class="stat-num">仙台</div><div class="stat-label">KOKO 站前西 · 三晚</div></div>
+      <div><div class="stat-num">盛岡</div><div class="stat-label">第四夜</div></div>
+      <div><div class="stat-num">東京</div><div class="stat-label">APA 藏前 · 兩晚</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="summary">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">7 天 6 夜總表</h2>
+    <p class="section-lead">與你規劃一致；下方另有每日細項與景點照片。</p>
+
+    <div class="table-wrap">
+      <table class="summary">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>上午</th>
+            <th>下午</th>
+            <th>晚上／住宿</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="d">8/13 Day 1</td>
+            <td>07:55–12:35<br>華航 高雄 → 東京</td>
+            <td>新幹線 東京 → 仙台<br>名掛丁商店街</td>
+            <td>AER 展望台<br>善治郎牛舌<br><span class="stay">宿：KOKO HOTEL 仙台駅前 West</span></td>
+          </tr>
+          <tr>
+            <td class="d">8/14 Day 2</td>
+            <td>仙台朝市<br>松島（JR 仙石線約 40 分）</td>
+            <td>觀光：瑞鳳殿</td>
+            <td>仙台城跡、大崎八幡宮<br><span class="stay">宿：KOKO HOTEL 仙台駅前 West</span></td>
+          </tr>
+          <tr class="hot">
+            <td class="d">8/15 Day 3</td>
+            <td>視情況由松島／仙台出發</td>
+            <td>鳴子溫泉<br>（新幹線→古川→陸羽東線）</td>
+            <td>返回仙台晚餐<br><span class="stay">宿：KOKO HOTEL 仙台駅前 West</span></td>
+          </tr>
+          <tr>
+            <td class="d">8/16 Day 4</td>
+            <td>猊鼻溪遊船</td>
+            <td>自由活動</td>
+            <td><span class="stay">宿：盛岡</span></td>
+          </tr>
+          <tr>
+            <td class="d">8/17 Day 5</td>
+            <td>輕井澤</td>
+            <td>自由活動</td>
+            <td><span class="stay">宿：APA Hotel Asakusa Kuramae</span></td>
+          </tr>
+          <tr>
+            <td class="d">8/18 Day 6</td>
+            <td>高尾山</td>
+            <td>明治神宮</td>
+            <td><span class="stay">宿：APA Hotel Asakusa Kuramae</span></td>
+          </tr>
+          <tr>
+            <td class="d">8/19 Day 7</td>
+            <td>上野、阿美橫丁</td>
+            <td>前往機場</td>
+            <td>18:35–21:40<br>華航 東京 → 高雄</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="day-jump" aria-label="跳至每日">
+      <a href="#day1">Day 1</a>
+      <a href="#day2">Day 2</a>
+      <a href="#day3">Day 3</a>
+      <a href="#day4">Day 4</a>
+      <a href="#day5">Day 5</a>
+      <a href="#day6">Day 6</a>
+      <a href="#day7">Day 7</a>
+    </nav>
+  </section>
+
+  <!-- ========== DAY DETAILS ========== -->
+  <section class="section" style="padding-top:0">
+    <p class="section-label">Day by day</p>
+    <h2 class="section-title">每日細項</h2>
+    <p class="section-lead">時間可依班機、體力微調；景點照片取自 Wikimedia Commons／Unsplash。</p>
+
+    <!-- DAY 1 -->
+    <article class="detail" id="day1">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">01</div>
+          <div class="detail-date">8/13（四）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">高雄 → 東京 → 仙台</h3>
+          <p class="detail-sub">抵達日 · 入住 KOKO HOTEL 仙台駅前 West（第 1／3 晚）</p>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/plane.jpg" alt="客機飛過雲層" width="1200" height="800" loading="lazy">
+          <figcaption>華航高雄起飛 · 07:55</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1701389469145-ad50d5704cc0?w=900&q=80&auto=format&fit=crop" alt="仙台市區空拍" width="900" height="675" loading="lazy">
+          <figcaption>仙台市街景</figcaption>
+        </figure>
+        <figure>
+          <img src="images/gyutan.jpg" alt="炭烤牛肉料理" width="900" height="675" loading="lazy">
+          <figcaption>當晚：善治郎牛舌</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">07:55</div>
+          <div>
+            <div class="t-title">華航起飛 · 高雄 → 東京</div>
+            <p class="t-body">預計 12:35 抵達（成田／羽田依實際班機）。下機後領行李、買交通票或啟用 JR Pass。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">午後</div>
+          <div>
+            <div class="t-title">新幹線 東京 → 仙台</div>
+            <p class="t-body">東北新幹線「はやぶさ／やまびこ」約 1.5–2 小時。建議事先劃位，行李可放大型置物區。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">傍晚</div>
+          <div>
+            <div class="t-title">名掛丁商店街 · 辦理入住</div>
+            <p class="t-body">入住 <strong>KOKO HOTEL 仙台駅前 West</strong>（中央 3-8-27，〒980-0021）。已預訂：2026/8/13–8/16（3 晚）。車站西口徒步可達，名掛丁就在附近，補水、買毛豆泥甜點當點心都很方便。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">晚上</div>
+          <div>
+            <div class="t-title">AER 展望台 → 善治郎牛舌</div>
+            <p class="t-body">AER 大樓展望台可看仙台夜景。晚餐推薦「上撰極厚真中牛舌定食」（仙台站 3F 牛舌通／站前本店）。</p>
+            <p class="t-tip">長途日：晚餐後早點休息，為隔天松島留體力。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 2 -->
+    <article class="detail" id="day2">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">02</div>
+          <div class="detail-date">8/14（五）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">松島 · 仙台名所</h3>
+          <p class="detail-sub">日本三景 · 續住 KOKO HOTEL 仙台駅前 West（第 2／3 晚）</p>
+        </div>
+      </div>
+      <div class="photo-hero">
+        <img src="images/matsushima.jpg" alt="松島灣島嶼與松樹" width="1600" height="900" loading="lazy">
+        <div class="photo-caption">松島灣 — 日本三景之一（Wikimedia Commons）</div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/matsushima2.jpg" alt="松島灣全景" width="1200" height="800" loading="lazy">
+          <figcaption>松島灣全景</figcaption>
+        </figure>
+        <figure>
+          <img src="images/seafood.jpg" alt="海鮮丼" width="900" height="675" loading="lazy">
+          <figcaption>仙台朝市海鮮丼</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?w=900&q=80&auto=format&fit=crop" alt="日式神社建築" width="900" height="675" loading="lazy">
+          <figcaption>瑞鳳殿／神社氛圍參考</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">早上</div>
+          <div>
+            <div class="t-title">仙台朝市早餐</div>
+            <p class="t-body">距車站約步行 5 分鐘。海鮮丼或齋藤惣菜店現炸可樂餅。約 08:00–17:00，週日休——出發前再確認。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">JR 仙石線 → 松島海岸</div>
+            <p class="t-body">約 40 分鐘。可走福浦橋、五大堂，或搭灣內觀光船看島群。八月正午熱，建議上午逛完再找陰涼處。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">① 瑞鳳殿</div>
+            <p class="t-body">伊達政宗之靈屋，極彩色華麗。可由松島返回仙台後，搭市內巴士或觀光路線前往。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">傍晚</div>
+          <div>
+            <div class="t-title">② 仙台城跡 · ③ 大崎八幡宮</div>
+            <p class="t-body">城跡（青葉山）可看政宗騎馬像與市區展望。大崎八幡宮為國寶社殿，金箔與漆工華麗，傍晚光線好看。</p>
+            <p class="t-tip">若體力不足，大崎八幡宮可改隔天或省略，優先瑞鳳殿＋城跡。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 3 -->
+    <article class="detail" id="day3">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">03</div>
+          <div class="detail-date">8/15（六）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">鳴子溫泉日歸</h3>
+          <p class="detail-sub">奧州名湯 · 續住 KOKO HOTEL 仙台駅前 West（第 3／3 晚）</p>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/naruko-station.jpg" alt="鳴子溫泉車站建築" width="1200" height="800" loading="lazy">
+          <figcaption>JR 鳴子溫泉站（Wikimedia Commons）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/onsen.jpg" alt="日式溫泉氛圍" width="900" height="675" loading="lazy">
+          <figcaption>日歸溫泉氛圍</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=900&q=80&auto=format&fit=crop" alt="日式甜點" width="900" height="675" loading="lazy">
+          <figcaption>泡湯後：栗子糰子</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">仙台 → 古川 → 鳴子溫泉</div>
+            <p class="t-body">東北新幹線至古川（約 15 分）→ 轉 JR 陸羽東線（約 45 分）→ 鳴子溫泉站。單程約 1–1.5 小時。使用 JR Pass 最方便。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">日歸溫泉 · 足湯 · 木芥子</div>
+            <p class="t-body">站前有免費足湯。選一家日歸湯屋放鬆。鳴子是木芥子（こけし）故鄉，可體驗彩繪。必吃：深瀬栗子糰子。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">晚上</div>
+          <div>
+            <div class="t-title">返回仙台市區晚餐</div>
+            <p class="t-body">原路折返至 KOKO HOTEL 仙台駅前 West 附近用餐。可吃牛舌以外的選擇：烤魚定食、毛豆泥拉麵等。</p>
+            <p class="t-tip">陸羽東線班次較疏，回程請先查時刻表，避免末班錯過。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 4 -->
+    <article class="detail" id="day4">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">04</div>
+          <div class="detail-date">8/16（日）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">猊鼻溪 · 盛岡</h3>
+          <p class="detail-sub">退房 KOKO HOTEL · 峽谷遊船 · 住宿盛岡</p>
+        </div>
+      </div>
+      <div class="photo-hero">
+        <img src="images/geibikei.jpg" alt="猊鼻溪峽谷水色" width="1600" height="900" loading="lazy">
+        <div class="photo-caption">猊鼻溪 — 岩手縣一関（Wikimedia Commons）</div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/geibikei2.jpg" alt="猊鼻溪另一視角" width="1200" height="800" loading="lazy">
+          <figcaption>猊鼻溪遊船路線風景</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=900&q=80&auto=format&fit=crop" alt="日式拉麵" width="900" height="675" loading="lazy">
+          <figcaption>盛岡晚餐：三大麵擇一</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=80&auto=format&fit=crop" alt="日本傳統街景" width="900" height="675" loading="lazy">
+          <figcaption>午後自由活動</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">退房 · 猊鼻溪遊船</div>
+            <p class="t-body">KOKO HOTEL 仙台駅前 West 退房（8/16）後，自仙台北上至一ノ関周邊，再轉往猊鼻溪。遊船約 90 分鐘，船夫會唱「猊鼻追分」。旺季建議預約或早到；大行李可先寄放車站或送往盛岡飯店。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">自由活動 → 前往盛岡</div>
+            <p class="t-body">可在溪谷周邊休息、買伴手禮，再搭列車往盛岡。當日移動適中，下午留白剛好。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">晚上</div>
+          <div>
+            <div class="t-title">盛岡三大麵</div>
+            <p class="t-body">盛岡冷麵、炸醬麵（じゃじゃ麺）、蕎麥麵——選一家即可。住宿盛岡，隔天南下輕井澤／東京。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 5 -->
+    <article class="detail" id="day5">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">05</div>
+          <div class="detail-date">8/17（一）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">輕井澤 · 東京</h3>
+          <p class="detail-sub">高原散步 · 入住 APA Hotel Asakusa Kuramae（第 1／2 晚）</p>
+        </div>
+      </div>
+      <div class="photo-hero">
+        <img src="images/karuizawa.jpg" alt="輕井澤星野溫泉周邊綠意" width="1600" height="900" loading="lazy">
+        <div class="photo-caption">輕井澤 · 星野溫泉一帶（Wikimedia Commons）</div>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">盛岡 → 輕井澤</div>
+            <p class="t-body">東北新幹線南下，多經大宮轉北陸新幹線至輕井澤。本日移動較長，行李可先寄 APA Hotel Asakusa Kuramae（若飯店接受提前寄送）或只帶當日包。</p>
+            <p class="t-tip">建議事先劃位；把「到達」當目標，景點別排太滿。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">輕井澤自由活動</div>
+            <p class="t-body">舊輕井澤銀座散步、Outlet，或雲場池擇一。高原比東京涼爽，適合慢慢走。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">晚上</div>
+          <div>
+            <div class="t-title">抵達 APA Hotel Asakusa Kuramae</div>
+            <p class="t-body">自輕井澤搭新幹線進東京後，轉往藏前／淺草橋一帶入住。已預訂：2026/8/17–8/19（2 晚）。飯店近淺草寺、晴空塔，晚餐可在淺草或藏前簡單解決。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 6 -->
+    <article class="detail" id="day6">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">06</div>
+          <div class="detail-date">8/18（二）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">高尾山 · 明治神宮</h3>
+          <p class="detail-sub">東京近郊 · 續住 APA Hotel Asakusa Kuramae（第 2／2 晚）</p>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/takao2.jpg" alt="高尾山登山步道與樹林" width="1200" height="800" loading="lazy">
+          <figcaption>高尾山步道（Wikimedia Commons）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/meiji.jpg" alt="明治神宮參道樹林" width="900" height="1200" loading="lazy">
+          <figcaption>明治神宮參道</figcaption>
+        </figure>
+        <figure>
+          <img src="images/tokyo-street.jpg" alt="東京夜景街道" width="900" height="675" loading="lazy">
+          <figcaption>晚上：新宿／澀谷輕鬆用餐</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">高尾山</div>
+            <p class="t-body">京王線至高尾山口。家人建議搭纜車或吊椅上山，再走平緩路線；不必硬攻最陡步道。山頂可眺望關東平野（天氣好時）。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">明治神宮</div>
+            <p class="t-body">原宿站步行即達。參道杉木成蔭，較市區涼爽。可順路逛表參道，但八月午後熱，參拜完即可回飯店休息。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">晚上</div>
+          <div>
+            <div class="t-title">返回藏前／淺草晚餐</div>
+            <p class="t-body">高尾與明治神宮離飯店較遠，回程可直接回 APA Hotel Asakusa Kuramae 附近用餐。明天退房並買伴手禮，不宜太晚。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- DAY 7 -->
+    <article class="detail" id="day7">
+      <div class="detail-head">
+        <div>
+          <div class="detail-num">07</div>
+          <div class="detail-date">8/19（三）</div>
+        </div>
+        <div>
+          <h3 class="detail-title">上野 · 阿美橫丁 · 返程</h3>
+          <p class="detail-sub">退房 APA Hotel Asakusa Kuramae · 華航返高雄</p>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <figure>
+          <img src="images/market.jpg" alt="市場美食攤位氣氛" width="1200" height="800" loading="lazy">
+          <figcaption>阿美橫丁掃貨氛圍</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=900&q=80&auto=format&fit=crop" alt="東京街頭" width="900" height="675" loading="lazy">
+          <figcaption>上野／東京街頭</figcaption>
+        </figure>
+        <figure>
+          <img src="images/plane.jpg" alt="返程班機" width="900" height="675" loading="lazy">
+          <figcaption>18:35 起飛 → 21:40 高雄</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li>
+          <div class="t-time">上午</div>
+          <div>
+            <div class="t-title">退房後 · 上野 · 阿美橫丁</div>
+            <p class="t-body">APA Hotel Asakusa Kuramae 退房後，行李可寄放或直送機場（依飯店服務）。藏前／淺草到上野很近；阿美橫丁買藥妝、零食、泡麵。若時間夠，出發前可順路逛淺草寺。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">下午</div>
+          <div>
+            <div class="t-title">前往機場</div>
+            <p class="t-body">依實際機場（成田／羽田）預留電車＋報到＋安檢時間。國際線建議起飛前 3 小時抵達機場較穩。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:35</div>
+          <div>
+            <div class="t-title">華航 東京 → 高雄</div>
+            <p class="t-body">預計 21:40 抵達高雄。旅途結束，回家休息。</p>
+          </div>
+        </li>
+      </ol>
+    </article>
+
+    <p class="photo-credit">
+      照片來源：Wikimedia Commons（松島、鳴子溫泉站、猊鼻溪、輕井澤、高尾山、明治神宮等，依各檔案授權使用）與 Unsplash（餐食、氛圍圖）。僅供個人行程網站展示。
+    </p>
+  </section>
+
+  <section class="food-strip" id="food">
+    <div class="food-inner">
+      <p class="section-label">Food</p>
+      <h2 class="section-title">行程內必吃</h2>
+      <p class="section-lead" style="margin-bottom:2rem">已寫進每日細項的幾口，到現場再依胃口加減。</p>
+      <div class="food-grid">
+        <article class="food-item">
+          <figure><img src="images/gyutan.jpg" alt="牛舌料理" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 1 晚餐</p>
+          <h3 class="food-name">善治郎牛舌</h3>
+          <p class="food-desc">上撰極厚真中牛舌定食——炭火慢烤，厚切如牛排。</p>
+          <p class="food-loc">仙台站 3F 牛舌通／站前本店</p>
+        </article>
+        <article class="food-item">
+          <figure><img src="images/seafood.jpg" alt="海鮮丼" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 2 上午</p>
+          <h3 class="food-name">仙台朝市海鮮丼</h3>
+          <p class="food-desc">平價新鮮的生魚片丼，或邊走邊吃現炸可樂餅。</p>
+          <p class="food-loc">車站步行約 5 分鐘 · 週日多休</p>
+        </article>
+        <article class="food-item">
+          <figure><img src="images/onsen.jpg" alt="溫泉與點心氛圍" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 3 下午</p>
+          <h3 class="food-name">鳴子 · 栗子糰子</h3>
+          <p class="food-desc">深瀬等老店：熱麻糬包整顆栗子，淋醬油膏，配熱茶。</p>
+          <p class="food-loc">鳴子溫泉站周邊</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tips">
+    <p class="section-label">Notes</p>
+    <h2 class="section-title">行前提醒</h2>
+    <div class="tips-wrap">
+      <div class="tip">
+        <h3>交通</h3>
+        <p>東北段用 JR 東日本周遊券或區間票比價。Day 5 盛岡→輕井澤→東京最長，務必劃位。</p>
+      </div>
+      <div class="tip">
+        <h3>八月氣候</h3>
+        <p>濕熱。遮陽、扇子、電解質飲料備好；戶外景點（松島、高尾）盡量排上午。</p>
+      </div>
+      <div class="tip">
+        <h3>溫泉禮儀</h3>
+        <p>入浴前沖洗、毛巾不入池。若有刺青限制，選館前查官網。</p>
+      </div>
+      <div class="tip">
+        <h3>伴手禮</h3>
+        <p>生鮮留最後一天阿美橫丁或機場；牛舌仙貝、毛豆泥甜點可在仙台先買。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>東北旅繪</strong>
+    <p>依你家既定行程整理 · 祝一路平安、吃得開心。</p>
+  </footer>
+
+  <script>
+    (function () {
+      const nav = document.getElementById("nav");
+      const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>
