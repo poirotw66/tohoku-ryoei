@@ -1,0 +1,5 @@
+.cursor/
+code_artifact*.html
+*.tmp
+Thumbs.db
+Desktop.ini

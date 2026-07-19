@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東北旅繪 — 家族精華之旅</title>
-  <meta name="description" content="2026 年 8 月 13–19 日家族行程：仙台、松島、鳴子溫泉、猊鼻溪、盛岡、輕井澤、東京。">
+  <meta name="description" content="2026 年 8 月 13–19 日家族行程：高雄⇄成田、JR東北周遊券5日、仙台、松島、鳴子、猊鼻溪、盛岡、輕井澤、東京。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
@@ -52,17 +52,165 @@
       font-size: 1.15rem; font-weight: 700; letter-spacing: 0.08em;
       color: var(--steam); transition: color 0.3s;
     }
-    .nav.is-scrolled .nav-brand { color: var(--pine-deep); }
+    .nav.is-scrolled .nav-brand,
+    .nav.is-open .nav-brand { color: var(--pine-deep); }
+    .nav-toggle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0.65rem;
+      border: 1px solid rgba(242, 247, 245, 0.35);
+      background: transparent;
+      cursor: pointer;
+      z-index: 110;
+    }
+    .nav.is-scrolled .nav-toggle,
+    .nav.is-open .nav-toggle {
+      border-color: var(--day-line);
+    }
+    .nav-toggle span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: var(--steam);
+      transition: transform 0.25s, opacity 0.25s, background 0.3s;
+    }
+    .nav.is-scrolled .nav-toggle span,
+    .nav.is-open .nav-toggle span { background: var(--pine-deep); }
+    .nav.is-open .nav-toggle span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav.is-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .nav.is-open .nav-toggle span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
     .nav-links {
-      display: none; gap: 1.5rem; list-style: none;
-      font-size: 0.88rem; font-weight: 500;
+      display: none;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.88rem;
+      font-weight: 500;
     }
     .nav-links a { color: rgba(242, 247, 245, 0.85); }
     .nav.is-scrolled .nav-links a { color: var(--mist); }
     .nav-links a:hover { color: var(--gold); }
+    @media (max-width: 767px) {
+      .nav.is-open {
+        background: rgba(247, 250, 248, 0.97);
+        backdrop-filter: blur(14px);
+      }
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 0 0 auto;
+        top: 0;
+        padding: 5rem 1.5rem 1.5rem;
+        background: rgba(247, 250, 248, 0.98);
+        gap: 0;
+        transform: translateY(-110%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        box-shadow: 0 12px 40px rgba(26, 42, 40, 0.12);
+        z-index: 105;
+      }
+      .nav.is-open .nav-links {
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .nav-links li { border-bottom: 1px solid var(--day-line); }
+      .nav-links a {
+        display: block;
+        padding: 1rem 0.25rem;
+        font-size: 1.05rem;
+        color: var(--pine-deep) !important;
+      }
+      .nav-links a:hover { color: var(--pine) !important; }
+    }
     @media (min-width: 768px) {
       .nav { padding: 1.1rem 3rem; }
+      .nav-toggle { display: none; }
       .nav-links { display: flex; }
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      min-height: 2.5rem;
+      padding: 0.45rem 0.85rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--pine-deep);
+      background: rgba(45, 90, 74, 0.08);
+      border: 1px solid rgba(45, 90, 74, 0.22);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .map-btn:hover {
+      background: rgba(45, 90, 74, 0.14);
+      border-color: var(--pine);
+      transform: translateY(-1px);
+    }
+    .map-btn::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: var(--coral);
+      flex-shrink: 0;
+    }
+    .map-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+    @media (min-width: 560px) {
+      .map-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .map-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .map-card {
+      padding: 1rem 1.1rem;
+      border-top: 1px solid var(--day-line);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      align-items: flex-start;
+    }
+    .map-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--pine-deep);
+      font-weight: 700;
+    }
+    .map-card p {
+      font-size: 0.82rem;
+      color: #4a5e58;
+      line-height: 1.5;
+    }
+    .map-card .map-btn { width: 100%; }
+    .map-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--mist);
+      margin: 1.75rem 0 0.5rem;
+      grid-column: 1 / -1;
+    }
+    .day-maps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: -0.25rem 0 1.35rem;
     }
 
     .hero {
@@ -74,7 +222,7 @@
       position: absolute; inset: 0; z-index: -2;
       background:
         linear-gradient(180deg, rgba(26,42,40,0.2) 0%, rgba(26,42,40,0.5) 40%, rgba(14,28,26,0.92) 100%),
-        url("images/matsushima2.jpg") center / cover no-repeat;
+        url("images/matsushima2.webp") center / cover no-repeat;
       animation: hero-drift 28s ease-in-out infinite alternate;
     }
     @keyframes hero-drift {
@@ -256,6 +404,32 @@
       background: linear-gradient(transparent, rgba(14, 28, 26, 0.7));
       color: var(--steam); font-size: 0.78rem;
     }
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+    }
+    @media (min-width: 700px) {
+      .photo-strip { grid-template-columns: repeat(4, 1fr); }
+    }
+    .photo-strip figure {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--fog);
+    }
+    .photo-strip img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .photo-strip figure:hover img { transform: scale(1.05); }
+    .photo-strip figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 0.55rem 0.7rem;
+      background: linear-gradient(transparent, rgba(14, 28, 26, 0.72));
+      color: var(--steam); font-size: 0.72rem; font-weight: 500;
+    }
 
     .timeline { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .timeline li {
@@ -277,6 +451,31 @@
     .t-body { font-size: 0.9rem; color: #3d524c; }
     .t-tip {
       margin-top: 0.45rem; font-size: 0.82rem; color: var(--coral); font-weight: 500;
+    }
+    .day-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem;
+      margin: -0.5rem 0 1.5rem;
+      font-size: 0.78rem; color: var(--mist);
+    }
+    .day-meta span {
+      padding: 0.25rem 0.55rem;
+      border: 1px solid var(--day-line);
+      letter-spacing: 0.02em;
+    }
+    .t-steps {
+      margin: 0.55rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.88rem;
+      color: #3d524c;
+    }
+    .t-steps li { margin: 0.25rem 0; }
+    .t-meal {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--pine);
+      letter-spacing: 0.04em;
     }
 
     .food-strip {
@@ -316,6 +515,133 @@
     }
     .tip p { font-size: 0.9rem; color: #4a5e58; }
 
+    .prep-banner {
+      background: var(--fog);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      border-left: 3px solid var(--gold);
+    }
+    .prep-banner strong {
+      font-family: var(--font-display);
+      color: var(--pine-deep);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .prep-banner p { font-size: 0.9rem; color: #4a5e58; }
+
+    .prep-grid {
+      display: grid;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    @media (min-width: 800px) {
+      .prep-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .prep-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--pine-deep);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--day-line);
+    }
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .check-list li {
+      display: grid;
+      grid-template-columns: 1.25rem 1fr;
+      gap: 0.65rem;
+      align-items: start;
+      font-size: 0.9rem;
+      color: #3d524c;
+    }
+    .check-list input[type="checkbox"] {
+      margin-top: 0.3rem;
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--pine);
+      cursor: pointer;
+    }
+    .check-list li.is-done label {
+      text-decoration: line-through;
+      color: var(--mist);
+    }
+    .check-list .done-tag {
+      display: inline-block;
+      margin-left: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--pine);
+      background: rgba(45, 90, 74, 0.1);
+      padding: 0.1rem 0.4rem;
+    }
+
+    .timeline-prep {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-prep li {
+      display: grid;
+      grid-template-columns: 6.5rem 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--day-line);
+      font-size: 0.9rem;
+    }
+    @media (min-width: 640px) {
+      .timeline-prep li { grid-template-columns: 8rem 1fr; }
+    }
+    .timeline-prep .when {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+    }
+    .timeline-prep .what { color: #3d524c; }
+    .timeline-prep .what strong {
+      display: block;
+      font-family: var(--font-display);
+      color: var(--pine-deep);
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    .booking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 2.5rem;
+    }
+    .booking-table th {
+      text-align: left;
+      padding: 0.75rem 0.85rem;
+      background: var(--fog);
+      color: var(--mist);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .booking-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--day-line);
+      vertical-align: top;
+    }
+    .booking-table .ok {
+      color: var(--pine);
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .booking-table .pending {
+      color: var(--coral);
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
     .photo-credit {
       font-size: 0.72rem; color: var(--mist); margin-top: 2rem;
       line-height: 1.5;
@@ -336,11 +662,15 @@
 
   <nav class="nav" id="nav" aria-label="主選單">
     <a class="nav-brand" href="#">東北旅繪</a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="開啟選單">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navMenu">
+      <li><a href="#prep">行前準備</a></li>
+      <li><a href="#maps">地圖速開</a></li>
       <li><a href="#summary">總表</a></li>
       <li><a href="#day1">每日細項</a></li>
       <li><a href="#food">美食</a></li>
-      <li><a href="#tips">提醒</a></li>
     </ul>
   </nav>
 
@@ -351,12 +681,12 @@
       <p class="hero-lead">依你家既定行程整理的七日導覽——松島海灣、鳴子溫泉、猊鼻溪到東京，每天細項與實景照片一次看完。</p>
       <div class="hero-meta">
         <span>2026.08.13 – 08.19</span>
-        <span>華航 高雄 ⇄ 東京</span>
-        <span>7 天 6 夜</span>
+        <span>華航 高雄 ⇄ 成田</span>
+        <span>JR 東北周遊券 5 日</span>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#summary">行程總表</a>
-        <a class="btn btn-ghost" href="#day1">從第一天開始</a>
+        <a class="btn btn-primary" href="#prep">行前準備清單</a>
+        <a class="btn btn-ghost" href="#maps">一鍵開地圖</a>
       </div>
     </div>
   </header>
@@ -367,6 +697,281 @@
       <div><div class="stat-num">仙台</div><div class="stat-label">KOKO 站前西 · 三晚</div></div>
       <div><div class="stat-num">盛岡</div><div class="stat-label">第四夜</div></div>
       <div><div class="stat-num">東京</div><div class="stat-label">APA 藏前 · 兩晚</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="prep">
+    <p class="section-label">Before you go</p>
+    <h2 class="section-title">行前準備</h2>
+    <p class="section-lead">出發前可勾選的清單；勾選狀態會記在這台裝置的瀏覽器裡。</p>
+
+    <div class="prep-banner">
+      <strong>出發日：2026/8/13（四）· 華航高雄 → 成田</strong>
+      <p>返程 8/19（三）18:35 自成田起飛。交通已決定使用 <strong>JR 東日本鐵路周遊券（東北地區）5 日</strong>；建議自 8/13 啟用至 8/17（含成田特快 N'EX、東北新幹線、鳴子、盛岡→輕井澤→東京）。8/18–8/19 高尾（京王線）與返程成田另購票。</p>
+    </div>
+
+    <h3 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">預訂現況</h3>
+    <div class="table-wrap">
+      <table class="booking-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>內容</th>
+            <th>狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>去程機票</td>
+            <td>華航 高雄 → <strong>成田</strong> · 8/13 07:55–12:35</td>
+            <td class="ok">已預訂</td>
+          </tr>
+          <tr>
+            <td>回程機票</td>
+            <td>華航 <strong>成田</strong> → 高雄 · 8/19 18:35–21:40</td>
+            <td class="ok">已預訂</td>
+          </tr>
+          <tr>
+            <td>仙台住宿</td>
+            <td>KOKO HOTEL 仙台駅前 West<br>中央 3-8-27 · 8/13–8/16（3 晚）<br>
+              <a class="map-btn" style="margin-top:0.5rem" href="https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+%E4%BB%99%E5%8F%B0%E9%A7%85%E5%89%8DWest" target="_blank" rel="noopener noreferrer">開地圖</a>
+            </td>
+            <td class="ok">已預訂</td>
+          </tr>
+          <tr>
+            <td>盛岡住宿</td>
+            <td>8/16 一晚（猊鼻溪當日）</td>
+            <td class="pending">待預訂</td>
+          </tr>
+          <tr>
+            <td>東京住宿</td>
+            <td>APA Hotel Asakusa Kuramae<br>8/17–8/19（2 晚）<br>
+              <a class="map-btn" style="margin-top:0.5rem" href="https://maps.app.goo.gl/3ztZEFXJ3SpAySe88" target="_blank" rel="noopener noreferrer">開地圖</a>
+            </td>
+            <td class="ok">已預訂</td>
+          </tr>
+          <tr>
+            <td>交通票券</td>
+            <td>JR 東日本鐵路周遊券（東北地區）<strong>5 日</strong><br>建議啟用：8/13–8/17（連續五日）</td>
+            <td class="ok">已決定</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">準備時程</h3>
+    <ol class="timeline-prep">
+      <li>
+        <div class="when">出發前 3–4 週</div>
+        <div class="what">
+          <strong>訂盛岡飯店 · 兌換／啟用周遊券準備</strong>
+          JR 東北 5 日券建議啟用日：<strong>8/13–8/17</strong>。線上購買後記得下載兌換用 QR／確認信；成田空港可換票並劃位（N'EX＋東京→仙台）。下載轉乘 App（Japan Travel by NAVITIME、Google 地圖）。
+        </div>
+      </li>
+      <li>
+        <div class="when">出發前 1–2 週</div>
+        <div class="what">
+          <strong>新幹線劃位 · 通知飯店 · 換匯／信用卡</strong>
+          優先劃：Day 1 東京→仙台、Day 5 盛岡→大宮→輕井澤→東京。確認 KOKO／APA 入住人姓名與電話。準備 Visa／Mastercard；現金備少量日圓。
+        </div>
+      </li>
+      <li>
+        <div class="when">出發前 3 天</div>
+        <div class="what">
+          <strong>線上報到 · 再查天氣與班次</strong>
+          華航網路報到、選位。查仙台／東京天氣預報；陸羽東線（鳴子）、猊鼻溪遊船是否需預約。
+        </div>
+      </li>
+      <li>
+        <div class="when">出發前一晚</div>
+        <div class="what">
+          <strong>行李定裝 · 文件放隨身</strong>
+          護照、機票／訂房確認信、飯店地址日文截圖、行動電源、常備藥。充電器、轉換插頭（日本兩腳扁）放隨身包。
+        </div>
+      </li>
+      <li>
+        <div class="when">出發當天</div>
+        <div class="what">
+          <strong>高雄機場 · 07:55 起飛 → 成田</strong>
+          國際線建議起飛前 2.5–3 小時到機場。抵成田後換 JR 東北周遊券 → 劃 N'EX 與新幹線 → 東京站轉東北新幹線往仙台 → 入住 KOKO HOTEL。
+        </div>
+      </li>
+    </ol>
+
+    <div class="prep-grid">
+      <div class="prep-block">
+        <h3>證件與訂房</h3>
+        <ul class="check-list" data-prep="docs">
+          <li><input type="checkbox" id="p1"><label for="p1">護照有效期足夠（建議半年以上）</label></li>
+          <li class="is-done"><input type="checkbox" id="p2" checked disabled><label for="p2">去／回程華航機票已訂（高雄 ⇄ 成田）<span class="done-tag">已訂</span></label></li>
+          <li class="is-done"><input type="checkbox" id="p3" checked disabled><label for="p3">KOKO HOTEL 仙台駅前 West 訂房確認<span class="done-tag">已訂</span></label></li>
+          <li class="is-done"><input type="checkbox" id="p4" checked disabled><label for="p4">APA Hotel Asakusa Kuramae 訂房確認<span class="done-tag">已訂</span></label></li>
+          <li><input type="checkbox" id="p5"><label for="p5">盛岡 8/16 一晚已預訂</label></li>
+          <li><input type="checkbox" id="p6"><label for="p6">飯店中文／日文地址截圖（給計程車用）</label></li>
+          <li><input type="checkbox" id="p7"><label for="p7">旅遊平安險已投保</label></li>
+        </ul>
+      </div>
+
+      <div class="prep-block">
+        <h3>交通與通訊</h3>
+        <ul class="check-list" data-prep="transit">
+          <li class="is-done"><input type="checkbox" id="p8" checked disabled><label for="p8">JR 東日本周遊券（東北）5 日已決定<span class="done-tag">已決定</span></label></li>
+          <li><input type="checkbox" id="p8b"><label for="p8b">周遊券已線上購買／兌換單存好（建議啟用 8/13–8/17）</label></li>
+          <li><input type="checkbox" id="p9"><label for="p9">成田→東京（N'EX）與東京→仙台新幹線劃位（Day 1）</label></li>
+          <li><input type="checkbox" id="p10"><label for="p10">盛岡→輕井澤→東京劃位（Day 5）</label></li>
+          <li><input type="checkbox" id="p11"><label for="p11">準備 eSIM／隨身 Wi-Fi／漫遊其一</label></li>
+          <li><input type="checkbox" id="p12"><label for="p12">下載轉乘 App、離線地圖</label></li>
+          <li><input type="checkbox" id="p13"><label for="p13">Suica／Pasmo（手機或實體卡）— 地鐵／京王線用</label></li>
+        </ul>
+      </div>
+
+      <div class="prep-block">
+        <h3>行李打包（八月）</h3>
+        <ul class="check-list" data-prep="pack">
+          <li><input type="checkbox" id="p14"><label for="p14">透氣衣物、短褲／薄長褲、拖鞋</label></li>
+          <li><input type="checkbox" id="p15"><label for="p15">遮陽帽、陽傘或摺疊傘、防曬乳</label></li>
+          <li><input type="checkbox" id="p16"><label for="p16">輕便雨衣／小風扇、電解質粉或飲料</label></li>
+          <li><input type="checkbox" id="p17"><label for="p17">薄外套一件（新幹線冷氣）</label></li>
+          <li><input type="checkbox" id="p18"><label for="p18">舒適步行鞋（松島、高尾山）</label></li>
+          <li><input type="checkbox" id="p19"><label for="p19">溫泉用品：小毛巾、沐浴乳（日歸館多有備品）</label></li>
+          <li><input type="checkbox" id="p20"><label for="p20">常備藥、OK 繃、腸胃藥、個人藥物</label></li>
+          <li><input type="checkbox" id="p21"><label for="p21">行動電源、充電線、日本兩腳轉接</label></li>
+        </ul>
+      </div>
+
+      <div class="prep-block">
+        <h3>金錢與到現地</h3>
+        <ul class="check-list" data-prep="money">
+          <li><input type="checkbox" id="p22"><label for="p22">信用卡開通海外交易</label></li>
+          <li><input type="checkbox" id="p23"><label for="p23">少量日圓現金（自動販賣機、小攤）</label></li>
+          <li><input type="checkbox" id="p24"><label for="p24">善治郎／朝市／猊鼻溪營業時間出發前再查一次</label></li>
+          <li><input type="checkbox" id="p25"><label for="p25">家人緊急聯絡方式互相存好</label></li>
+          <li><input type="checkbox" id="p26"><label for="p26">溫泉禮儀：入浴前沖洗、毛巾不入池</label></li>
+          <li><input type="checkbox" id="p27"><label for="p27">伴手禮策略：生鮮留 Day 7 阿美橫丁／機場</label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-wrap">
+      <div class="tip">
+        <h3>家族旅小提醒</h3>
+        <p>行程已偏舒適節奏；八月午後熱，松島與高尾山盡量上午完成。Day 5 移動最長，寧可少逛、早到 APA 休息。</p>
+      </div>
+      <div class="tip">
+        <h3>機場與行李</h3>
+        <p>進出皆為<strong>成田空港</strong>。去程用周遊券搭 N'EX；回程 8/19 周遊券若已於 8/17 用完，請另購 N'EX／Skyliner。國際線起飛前約 3 小時到機場較穩。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="maps">
+    <p class="section-label">Maps</p>
+    <h2 class="section-title">地圖速開</h2>
+    <p class="section-lead">點按鈕會用 Google 地圖開啟（手機通常直接進 App）。給長輩現場導航用。</p>
+
+    <div class="map-grid">
+      <p class="map-group-title">已訂飯店</p>
+      <div class="map-card">
+        <h3>KOKO HOTEL 仙台駅前 West</h3>
+        <p>仙台市中央 3-8-27 · 8/13–8/16</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+%E4%BB%99%E5%8F%B0%E9%A7%85%E5%89%8DWest" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>APA Hotel Asakusa Kuramae</h3>
+        <p>淺草藏前 · 8/17–8/19</p>
+        <a class="map-btn" href="https://maps.app.goo.gl/3ztZEFXJ3SpAySe88" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+
+      <p class="map-group-title">交通樞紐</p>
+      <div class="map-card">
+        <h3>成田空港</h3>
+        <p>進出機場 · N'EX／Skyliner</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%88%90%E7%94%B0%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>仙台駅</h3>
+        <p>東北據點 · 西口近 KOKO</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>盛岡駅</h3>
+        <p>Day 4–5 轉乘</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%9B%9B%E5%B2%A1%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+
+      <p class="map-group-title">主要景點</p>
+      <div class="map-card">
+        <h3>松島海岸駅</h3>
+        <p>Day 2 · 日本三景</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%BE%E5%B3%B6%E6%B5%B7%E5%B2%B8%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>瑞鳳殿</h3>
+        <p>Day 2 · 伊達政宗靈屋</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>仙台城跡</h3>
+        <p>Day 2 · 青葉城址</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>大崎八幡宮</h3>
+        <p>Day 2 · 可選</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E5%B4%8E%E5%85%AB%E5%B9%A1%E5%AE%AE" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>鳴子溫泉駅</h3>
+        <p>Day 3 · 日歸溫泉</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%B4%E5%AD%90%E6%B8%A9%E6%B3%89%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>猊鼻溪</h3>
+        <p>Day 4 · 遊船碼頭</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%8E%E9%BC%BB%E6%BA%AA" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>輕井澤駅</h3>
+        <p>Day 5 · 高原</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E8%BB%BD%E4%BA%95%E6%B2%A2%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>高尾山口駅</h3>
+        <p>Day 6 · 纜車入口</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%AB%98%E5%B0%BE%E5%B1%B1%E5%8F%A3%E9%A7%85" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>明治神宮</h3>
+        <p>Day 6 · 原宿</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%98%8E%E6%B2%BB%E7%A5%9E%E5%AE%AE" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>阿美橫丁</h3>
+        <p>Day 7 · 上野伴手禮</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%A1%E3%83%A4%E6%A8%AA%E4%B8%81" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>淺草寺</h3>
+        <p>Day 7 · 可選順路</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%B5%85%E8%8D%89%E5%AF%BA" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+
+      <p class="map-group-title">美食參考</p>
+      <div class="map-card">
+        <h3>牛たん善治郎</h3>
+        <p>Day 1 晚餐 · 仙台駅</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%89%9B%E3%81%9F%E3%82%93%E5%96%84%E6%B2%BB%E9%83%8E+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>仙台朝市</h3>
+        <p>Day 2 早餐</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E6%9C%9D%E5%B8%82" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
+      <div class="map-card">
+        <h3>AER 展望台</h3>
+        <p>Day 1 夜景</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=AER+%E4%BB%99%E5%8F%B0+%E5%B1%95%E6%9C%9B%E5%8F%B0" target="_blank" rel="noopener noreferrer">開啟地圖</a>
+      </div>
     </div>
   </section>
 
@@ -388,7 +993,7 @@
         <tbody>
           <tr>
             <td class="d">8/13 Day 1</td>
-            <td>07:55–12:35<br>華航 高雄 → 東京</td>
+            <td>07:55–12:35<br>華航 高雄 → <strong>成田</strong></td>
             <td>新幹線 東京 → 仙台<br>名掛丁商店街</td>
             <td>AER 展望台<br>善治郎牛舌<br><span class="stay">宿：KOKO HOTEL 仙台駅前 West</span></td>
           </tr>
@@ -426,13 +1031,14 @@
             <td class="d">8/19 Day 7</td>
             <td>上野、阿美橫丁</td>
             <td>前往機場</td>
-            <td>18:35–21:40<br>華航 東京 → 高雄</td>
+            <td>18:35–21:40<br>華航 <strong>成田</strong> → 高雄</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <nav class="day-jump" aria-label="跳至每日">
+      <a href="#maps">地圖</a>
       <a href="#day1">Day 1</a>
       <a href="#day2">Day 2</a>
       <a href="#day3">Day 3</a>
@@ -447,7 +1053,7 @@
   <section class="section" style="padding-top:0">
     <p class="section-label">Day by day</p>
     <h2 class="section-title">每日細項</h2>
-    <p class="section-lead">時間可依班機、體力微調；景點照片取自 Wikimedia Commons／Unsplash。</p>
+    <p class="section-lead">已補上建議時刻、交通步驟、用餐與備案；可依體力微調。班次與票價請出發前再查官方資訊。</p>
 
     <!-- DAY 1 -->
     <article class="detail" id="day1">
@@ -457,51 +1063,123 @@
           <div class="detail-date">8/13（四）</div>
         </div>
         <div>
-          <h3 class="detail-title">高雄 → 東京 → 仙台</h3>
+          <h3 class="detail-title">高雄 → 成田 → 仙台</h3>
           <p class="detail-sub">抵達日 · 入住 KOKO HOTEL 仙台駅前 West（第 1／3 晚）</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>移動日</span>
+        <span>華航 CI · 07:55→12:35</span>
+        <span>東北新幹線</span>
+        <span>住宿：KOKO 仙台駅前 West</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%88%90%E7%94%B0%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF" target="_blank" rel="noopener noreferrer">成田空港</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+%E4%BB%99%E5%8F%B0%E9%A7%85%E5%89%8DWest" target="_blank" rel="noopener noreferrer">KOKO 飯店</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%89%9B%E3%81%9F%E3%82%93%E5%96%84%E6%B2%BB%E9%83%8E+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">善治郎</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=AER+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">AER</a>
+      </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/plane.jpg" alt="客機飛過雲層" width="1200" height="800" loading="lazy">
+          <img src="images/plane.webp" alt="客機飛過雲層" width="1200" height="800" loading="lazy">
           <figcaption>華航高雄起飛 · 07:55</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1701389469145-ad50d5704cc0?w=900&q=80&auto=format&fit=crop" alt="仙台市區空拍" width="900" height="675" loading="lazy">
+          <img src="images/sendai-city.webp" alt="仙台市區空拍" width="900" height="675" loading="lazy">
           <figcaption>仙台市街景</figcaption>
         </figure>
         <figure>
-          <img src="images/gyutan.jpg" alt="炭烤牛肉料理" width="900" height="675" loading="lazy">
+          <img src="images/gyutan.webp" alt="炭烤牛肉料理" width="900" height="675" loading="lazy">
           <figcaption>當晚：善治郎牛舌</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/train.webp" alt="列車行駛風景" width="800" height="600" loading="lazy">
+          <figcaption>新幹線前往仙台</figcaption>
+        </figure>
+        <figure>
+          <img src="images/shinkansen.webp" alt="仙台站新幹線はやぶさ" width="800" height="600" loading="lazy">
+          <figcaption>仙台駅新幹線（真景）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/aer.webp" alt="AER 展望台看仙台" width="800" height="600" loading="lazy">
+          <figcaption>AER 展望台夜景方向</figcaption>
+        </figure>
+        <figure>
+          <img src="images/japan-street.webp" alt="名掛丁商店街氛圍" width="800" height="600" loading="lazy">
+          <figcaption>名掛丁散步</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
+          <div class="t-time">05:30–07:00</div>
+          <div>
+            <div class="t-title">前往高雄機場 · 報到</div>
+            <p class="t-body">國際線建議起飛前約 2.5–3 小時抵達。確認護照、華航電子機票、JR 東北周遊券兌換單與飯店確認信。</p>
+            <p class="t-meal">早餐：機場輕食或機上餐</p>
+          </div>
+        </li>
+        <li>
           <div class="t-time">07:55</div>
           <div>
-            <div class="t-title">華航起飛 · 高雄 → 東京</div>
-            <p class="t-body">預計 12:35 抵達（成田／羽田依實際班機）。下機後領行李、買交通票或啟用 JR Pass。</p>
+            <div class="t-title">華航起飛 · 高雄 → 成田</div>
+            <p class="t-body">預計 <strong>12:35 抵達成田空港</strong>。機上可小睡，為午後 N'EX＋新幹線留體力。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">午後</div>
+          <div class="t-time">12:35–14:00</div>
           <div>
-            <div class="t-title">新幹線 東京 → 仙台</div>
-            <p class="t-body">東北新幹線「はやぶさ／やまびこ」約 1.5–2 小時。建議事先劃位，行李可放大型置物區。</p>
+            <div class="t-title">成田空港 · 換周遊券 · 轉往東京</div>
+            <p class="t-body">入境領行李後，至 JR 東日本旅行服務中心／綠色窗口<strong>兌換 JR 東日本鐵路周遊券（東北地區）5 日</strong>，建議當日啟用（用至 8/17）。</p>
+            <ul class="t-steps">
+              <li>劃位：<strong>成田特快 N'EX</strong> → 東京站（約 60 分；周遊券適用）</li>
+              <li>同日劃位：東京 → 仙台東北新幹線（はやぶさ／やまびこ）</li>
+              <li>啟用 eSIM／Wi-Fi；大行李放新幹線大型置物區</li>
+            </ul>
+            <p class="t-tip">成田換票＋劃位尖峰可能排隊，預留緩衝；N'EX 盡量劃指定席。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">傍晚</div>
+          <div class="t-time">14:00–16:30</div>
           <div>
-            <div class="t-title">名掛丁商店街 · 辦理入住</div>
-            <p class="t-body">入住 <strong>KOKO HOTEL 仙台駅前 West</strong>（中央 3-8-27，〒980-0021）。已預訂：2026/8/13–8/16（3 晚）。車站西口徒步可達，名掛丁就在附近，補水、買毛豆泥甜點當點心都很方便。</p>
+            <div class="t-title">東北新幹線 東京 → 仙台</div>
+            <p class="t-body">約 1.5–2 小時。車內可補水、吃便當；到站後出西口方向較近飯店。</p>
+            <p class="t-meal">午餐：車站／車內便當</p>
           </div>
         </li>
         <li>
-          <div class="t-time">晚上</div>
+          <div class="t-time">16:30–17:30</div>
           <div>
-            <div class="t-title">AER 展望台 → 善治郎牛舌</div>
-            <p class="t-body">AER 大樓展望台可看仙台夜景。晚餐推薦「上撰極厚真中牛舌定食」（仙台站 3F 牛舌通／站前本店）。</p>
+            <div class="t-title">辦理入住 · KOKO HOTEL 仙台駅前 West</div>
+            <p class="t-body">地址：宮城県仙台市青葉区中央 3-8-27，〒980-0021。已預訂 2026/8/13–8/16（3 晚）。車站西口徒步可達。</p>
+            <ul class="t-steps">
+              <li>仙台站西口出站</li>
+              <li>步行約 3–7 分鐘至飯店（中央 3 丁目一帶）</li>
+              <li>寄放／安置大件行李後再出門</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">17:30–18:30</div>
+          <div>
+            <div class="t-title">名掛丁商店街散步</div>
+            <p class="t-body">補水、買毛豆泥甜點或伴手禮當點心。天氣熱時可在拱廊內慢慢走。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:30–19:30</div>
+          <div>
+            <div class="t-title">AER 展望台</div>
+            <p class="t-body">AER 大樓展望台可看仙台夜景與街景。時間緊則可縮短，優先晚餐排隊。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">19:30–21:00</div>
+          <div>
+            <div class="t-title">善治郎牛舌晚餐</div>
+            <p class="t-body">推薦「上撰極厚真中牛舌定食」。仙台站 3F 牛舌通或站前本店皆可，尖峰請提早或候位。</p>
+            <p class="t-meal">晚餐：善治郎牛舌定食</p>
             <p class="t-tip">長途日：晚餐後早點休息，為隔天松島留體力。</p>
           </div>
         </li>
@@ -520,52 +1198,132 @@
           <p class="detail-sub">日本三景 · 續住 KOKO HOTEL 仙台駅前 West（第 2／3 晚）</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>日歸松島</span>
+        <span>JR 仙石線約 40 分</span>
+        <span>瑞鳳殿 · 仙台城跡</span>
+        <span>續住 KOKO</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E6%9C%9D%E5%B8%82" target="_blank" rel="noopener noreferrer">仙台朝市</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%BE%E5%B3%B6%E6%B5%B7%E5%B2%B8%E9%A7%85" target="_blank" rel="noopener noreferrer">松島海岸</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">瑞鳳殿</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1" target="_blank" rel="noopener noreferrer">仙台城跡</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E5%B4%8E%E5%85%AB%E5%B9%A1%E5%AE%AE" target="_blank" rel="noopener noreferrer">大崎八幡宮</a>
+      </div>
       <div class="photo-hero">
-        <img src="images/matsushima.jpg" alt="松島灣島嶼與松樹" width="1600" height="900" loading="lazy">
+        <img src="images/matsushima.webp" alt="松島灣島嶼與松樹" width="1600" height="900" loading="lazy">
         <div class="photo-caption">松島灣 — 日本三景之一（Wikimedia Commons）</div>
       </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/matsushima2.jpg" alt="松島灣全景" width="1200" height="800" loading="lazy">
+          <img src="images/matsushima2.webp" alt="松島灣全景" width="1200" height="800" loading="lazy">
           <figcaption>松島灣全景</figcaption>
         </figure>
         <figure>
-          <img src="images/seafood.jpg" alt="海鮮丼" width="900" height="675" loading="lazy">
+          <img src="images/seafood.webp" alt="海鮮丼" width="900" height="675" loading="lazy">
           <figcaption>仙台朝市海鮮丼</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?w=900&q=80&auto=format&fit=crop" alt="日式神社建築" width="900" height="675" loading="lazy">
-          <figcaption>瑞鳳殿／神社氛圍參考</figcaption>
+          <img src="images/zuihoden.webp" alt="瑞鳳殿" width="900" height="675" loading="lazy">
+          <figcaption>瑞鳳殿（真景）</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/masamune.webp" alt="伊達政宗騎馬像" width="800" height="600" loading="lazy">
+          <figcaption>仙台城跡 · 政宗像</figcaption>
+        </figure>
+        <figure>
+          <img src="images/osaki.webp" alt="大崎八幡宮" width="800" height="600" loading="lazy">
+          <figcaption>大崎八幡宮（真景）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/zuihoden.webp" alt="瑞鳳殿極彩色建築" width="800" height="600" loading="lazy">
+          <figcaption>瑞鳳殿近景</figcaption>
+        </figure>
+        <figure>
+          <img src="images/matsushima.webp" alt="松島島嶼近景" width="800" height="600" loading="lazy">
+          <figcaption>松島五大堂周邊</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">早上</div>
+          <div class="t-time">07:30–08:30</div>
           <div>
             <div class="t-title">仙台朝市早餐</div>
-            <p class="t-body">距車站約步行 5 分鐘。海鮮丼或齋藤惣菜店現炸可樂餅。約 08:00–17:00，週日休——出發前再確認。</p>
+            <p class="t-body">距仙台站約步行 5 分鐘。海鮮丼或齋藤惣菜店現炸可樂餅都很適合出發前補給。</p>
+            <p class="t-meal">早餐：朝市海鮮丼／可樂餅</p>
+            <p class="t-tip">約 08:00–17:00，週日休——出發前再確認當日營業。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">08:40–09:30</div>
           <div>
             <div class="t-title">JR 仙石線 → 松島海岸</div>
-            <p class="t-body">約 40 分鐘。可走福浦橋、五大堂，或搭灣內觀光船看島群。八月正午熱，建議上午逛完再找陰涼處。</p>
+            <p class="t-body">約 40 分鐘。建議上午抵達，避開正午強日。</p>
+            <ul class="t-steps">
+              <li>仙台站 → 搭 JR 仙石線（快速／普通皆可）</li>
+              <li>松島海岸站下車</li>
+              <li>出站後步行至五大堂／福浦橋方向</li>
+            </ul>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">09:30–11:30</div>
+          <div>
+            <div class="t-title">松島散步 · 五大堂 · 福浦橋</div>
+            <p class="t-body">走福浦橋看灣內島群，五大堂紅橋好拍。八月正午熱，建議上午逛完再找陰涼處休息。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">11:00–12:00</div>
+          <div>
+            <div class="t-title">（選）松島灣觀光船</div>
+            <p class="t-body">約 50 分鐘航程，票價約 1,500 日圓；大致每小時一班，約 09:00–16:00（依當日公告）。家人同行可選坐船看島，體力較省。</p>
+            <p class="t-tip">出航時間與票價請以現地／官網為準；風浪大時可能停航。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">12:00–13:00</div>
+          <div>
+            <div class="t-title">松島午餐 · 返回仙台</div>
+            <p class="t-body">車站周邊或灣邊簡易午餐後，原路搭仙石線回仙台。</p>
+            <p class="t-meal">午餐：松島海鮮／牡蠣料理（依胃口）</p>
+            <ul class="t-steps">
+              <li>松島海岸 → JR 仙石線 → 仙台</li>
+              <li>回站後轉市內巴士或計程車往瑞鳳殿</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:30–15:00</div>
           <div>
             <div class="t-title">① 瑞鳳殿</div>
             <p class="t-body">伊達政宗之靈屋，極彩色華麗。可由松島返回仙台後，搭市內巴士或觀光路線前往。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">傍晚</div>
+          <div class="t-time">15:00–16:30</div>
           <div>
-            <div class="t-title">② 仙台城跡 · ③ 大崎八幡宮</div>
-            <p class="t-body">城跡（青葉山）可看政宗騎馬像與市區展望。大崎八幡宮為國寶社殿，金箔與漆工華麗，傍晚光線好看。</p>
-            <p class="t-tip">若體力不足，大崎八幡宮可改隔天或省略，優先瑞鳳殿＋城跡。</p>
+            <div class="t-title">② 仙台城跡（青葉山）</div>
+            <p class="t-body">可看政宗騎馬像與市區展望。與瑞鳳殿同區，步行或短程移動即可串連。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">16:30–18:00</div>
+          <div>
+            <div class="t-title">③（選）大崎八幡宮</div>
+            <p class="t-body">國寶社殿，金箔與漆工華麗，傍晚光線好看。體力不足可省略，優先瑞鳳殿＋城跡。</p>
+            <p class="t-tip">若體力不足，大崎八幡宮可改隔天或省略。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:30–20:30</div>
+          <div>
+            <div class="t-title">返回 KOKO · 仙台站前晚餐</div>
+            <p class="t-body">續住 KOKO HOTEL 仙台駅前 West。晚餐可在名掛丁／站前選烤魚定食或輕食，不必再排牛舌。</p>
+            <p class="t-meal">晚餐：站前定食／輕食</p>
           </div>
         </li>
       </ol>
@@ -583,41 +1341,119 @@
           <p class="detail-sub">奧州名湯 · 續住 KOKO HOTEL 仙台駅前 West（第 3／3 晚）</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>日歸溫泉</span>
+        <span>新幹線＋陸羽東線</span>
+        <span>足湯 · 栗子糰子</span>
+        <span>KOKO 最後一晚</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%B4%E5%AD%90%E6%B8%A9%E6%B3%89%E9%A7%85" target="_blank" rel="noopener noreferrer">鳴子溫泉駅</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%B7%B1%E7%80%AC+%E9%B3%B4%E5%AD%90+%E6%A0%97" target="_blank" rel="noopener noreferrer">深瀬栗子糰子</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+%E4%BB%99%E5%8F%B0%E9%A7%85%E5%89%8DWest" target="_blank" rel="noopener noreferrer">回 KOKO</a>
+      </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/naruko-station.jpg" alt="鳴子溫泉車站建築" width="1200" height="800" loading="lazy">
+          <img src="images/naruko-station.webp" alt="鳴子溫泉車站建築" width="1200" height="800" loading="lazy">
           <figcaption>JR 鳴子溫泉站（Wikimedia Commons）</figcaption>
         </figure>
         <figure>
-          <img src="images/onsen.jpg" alt="日式溫泉氛圍" width="900" height="675" loading="lazy">
+          <img src="images/onsen2.webp" alt="日式溫泉氛圍" width="900" height="675" loading="lazy">
           <figcaption>日歸溫泉氛圍</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=900&q=80&auto=format&fit=crop" alt="日式甜點" width="900" height="675" loading="lazy">
+          <img src="images/sweets.webp" alt="日式甜點" width="900" height="675" loading="lazy">
           <figcaption>泡湯後：栗子糰子</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/naruko.webp" alt="鳴子溫泉街遠景" width="800" height="600" loading="lazy">
+          <figcaption>鳴子溫泉街遠景（真景）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/onsen.webp" alt="溫泉放鬆" width="800" height="600" loading="lazy">
+          <figcaption>足湯／泡湯放鬆</figcaption>
+        </figure>
+        <figure>
+          <img src="images/forest.webp" alt="東北山林綠意" width="800" height="600" loading="lazy">
+          <figcaption>東北山間風光</figcaption>
+        </figure>
+        <figure>
+          <img src="images/train.webp" alt="陸羽東線列車" width="800" height="600" loading="lazy">
+          <figcaption>陸羽東線往返</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">07:30–08:00</div>
+          <div>
+            <div class="t-title">飯店出發 · 仙台站朝食</div>
+            <p class="t-body">簡單早餐後出發。出發前先查好陸羽東線往返時刻——班次較疏。</p>
+            <p class="t-meal">早餐：飯店／站前輕食</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">08:00–09:30</div>
           <div>
             <div class="t-title">仙台 → 古川 → 鳴子溫泉</div>
-            <p class="t-body">東北新幹線至古川（約 15 分）→ 轉 JR 陸羽東線（約 45 分）→ 鳴子溫泉站。單程約 1–1.5 小時。使用 JR Pass 最方便。</p>
+            <p class="t-body">單程約 1–1.5 小時。<strong>JR 東北周遊券</strong>可搭新幹線與陸羽東線。</p>
+            <ul class="t-steps">
+              <li>仙台 → 東北新幹線 → 古川（約 15 分）</li>
+              <li>古川 → JR 陸羽東線 → 鳴子溫泉（約 45 分）</li>
+              <li>鳴子溫泉站出站即近足湯與湯屋區</li>
+            </ul>
+            <p class="t-tip">陸羽東線班次稀疏，請先鎖定去程與回程班次再出發。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">09:30–10:00</div>
           <div>
-            <div class="t-title">日歸溫泉 · 足湯 · 木芥子</div>
-            <p class="t-body">站前有免費足湯。選一家日歸湯屋放鬆。鳴子是木芥子（こけし）故鄉，可體驗彩繪。必吃：深瀬栗子糰子。</p>
+            <div class="t-title">站前免費足湯</div>
+            <p class="t-body">先泡足暖身、拍車站建築，再決定日歸湯屋。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">晚上</div>
+          <div class="t-time">10:00–12:30</div>
           <div>
-            <div class="t-title">返回仙台市區晚餐</div>
-            <p class="t-body">原路折返至 KOKO HOTEL 仙台駅前 West 附近用餐。可吃牛舌以外的選擇：烤魚定食、毛豆泥拉麵等。</p>
-            <p class="t-tip">陸羽東線班次較疏，回程請先查時刻表，避免末班錯過。</p>
+            <div class="t-title">日歸溫泉</div>
+            <p class="t-body">選一家開放日歸的湯屋放鬆。攜帶小毛巾／換洗衣物較方便；貴重物品寄放櫃。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">12:30–13:30</div>
+          <div>
+            <div class="t-title">午餐 · 深瀬栗子糰子</div>
+            <p class="t-body">泡湯後來一份深瀬（Fukase）栗子糰子當甜點或輕食。也可搭配溫泉街簡單定食。</p>
+            <p class="t-meal">午餐／甜點：深瀬栗子糰子</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:30–15:00</div>
+          <div>
+            <div class="t-title">（選）木芥子彩繪體驗</div>
+            <p class="t-body">鳴子是木芥子（こけし）故鄉。若時間與體力允許，可體驗彩繪；否則逛工房選購即可。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">15:00–16:30</div>
+          <div>
+            <div class="t-title">返回仙台</div>
+            <p class="t-body">原路折返。務必對準預查的回程班次，避免末班錯過。</p>
+            <ul class="t-steps">
+              <li>鳴子溫泉 → 陸羽東線 → 古川</li>
+              <li>古川 → 東北新幹線 → 仙台</li>
+              <li>步行回 KOKO HOTEL 仙台駅前 West</li>
+            </ul>
+            <p class="t-tip">回程請先查時刻表，班次疏時寧早勿晚。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:00–20:00</div>
+          <div>
+            <div class="t-title">KOKO 最後一晚 · 仙台市區晚餐</div>
+            <p class="t-body">續住最後一晚。可吃牛舌以外的選擇：烤魚定食、毛豆泥拉麵等。明天退房往猊鼻溪／盛岡。</p>
+            <p class="t-meal">晚餐：烤魚定食／毛豆泥拉麵</p>
           </div>
         </li>
       </ol>
@@ -635,44 +1471,124 @@
           <p class="detail-sub">退房 KOKO HOTEL · 峽谷遊船 · 住宿盛岡</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>退房移動日</span>
+        <span>仙台→一ノ関</span>
+        <span>猊鼻溪遊船約 90 分</span>
+        <span>住宿盛岡（待訂）</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E3%83%8E%E9%96%A2%E9%A7%85" target="_blank" rel="noopener noreferrer">一ノ関駅</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%8E%E9%BC%BB%E6%BA%AA" target="_blank" rel="noopener noreferrer">猊鼻溪</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%9B%9B%E5%B2%A1%E9%A7%85" target="_blank" rel="noopener noreferrer">盛岡駅</a>
+      </div>
       <div class="photo-hero">
-        <img src="images/geibikei.jpg" alt="猊鼻溪峽谷水色" width="1600" height="900" loading="lazy">
+        <img src="images/geibikei.webp" alt="猊鼻溪峽谷水色" width="1600" height="900" loading="lazy">
         <div class="photo-caption">猊鼻溪 — 岩手縣一関（Wikimedia Commons）</div>
       </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/geibikei2.jpg" alt="猊鼻溪另一視角" width="1200" height="800" loading="lazy">
+          <img src="images/geibikei2.webp" alt="猊鼻溪另一視角" width="1200" height="800" loading="lazy">
           <figcaption>猊鼻溪遊船路線風景</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=900&q=80&auto=format&fit=crop" alt="日式拉麵" width="900" height="675" loading="lazy">
+          <img src="images/ramen.webp" alt="日式拉麵" width="900" height="675" loading="lazy">
           <figcaption>盛岡晚餐：三大麵擇一</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=80&auto=format&fit=crop" alt="日本傳統街景" width="900" height="675" loading="lazy">
+          <img src="images/japan-street.webp" alt="日本傳統街景" width="900" height="675" loading="lazy">
           <figcaption>午後自由活動</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/geibikei.webp" alt="猊鼻溪石灰岩峽谷" width="800" height="600" loading="lazy">
+          <figcaption>石灰岩峽谷近景</figcaption>
+        </figure>
+        <figure>
+          <img src="images/forest.webp" alt="岩手溪谷綠意" width="800" height="600" loading="lazy">
+          <figcaption>溪谷周邊綠意</figcaption>
+        </figure>
+        <figure>
+          <img src="images/train.webp" alt="列車前往盛岡" width="800" height="600" loading="lazy">
+          <figcaption>一ノ関 → 盛岡</figcaption>
+        </figure>
+        <figure>
+          <img src="images/sendai-city.webp" alt="東北城市街景" width="800" height="600" loading="lazy">
+          <figcaption>盛岡市區休息</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">07:30–08:30</div>
           <div>
-            <div class="t-title">退房 · 猊鼻溪遊船</div>
-            <p class="t-body">KOKO HOTEL 仙台駅前 West 退房（8/16）後，自仙台北上至一ノ関周邊，再轉往猊鼻溪。遊船約 90 分鐘，船夫會唱「猊鼻追分」。旺季建議預約或早到；大行李可先寄放車站或送往盛岡飯店。</p>
+            <div class="t-title">KOKO 退房 · 行李安排</div>
+            <p class="t-body">辦理退房（8/16）。大行李可先寄放一ノ関站、送往盛岡飯店，或僅帶當日小包前往猊鼻溪。</p>
+            <p class="t-meal">早餐：飯店／站前</p>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">08:30–09:30</div>
           <div>
-            <div class="t-title">自由活動 → 前往盛岡</div>
-            <p class="t-body">可在溪谷周邊休息、買伴手禮，再搭列車往盛岡。當日移動適中，下午留白剛好。</p>
+            <div class="t-title">仙台 → 一ノ関</div>
+            <p class="t-body">東北新幹線北上，約 30–40 分鐘至一ノ関。</p>
+            <ul class="t-steps">
+              <li>仙台 → 東北新幹線 → 一ノ関</li>
+              <li>站前轉巴士或計程車前往猊鼻溪</li>
+            </ul>
           </div>
         </li>
         <li>
-          <div class="t-time">晚上</div>
+          <div class="t-time">09:30–10:30</div>
           <div>
-            <div class="t-title">盛岡三大麵</div>
-            <p class="t-body">盛岡冷麵、炸醬麵（じゃじゃ麺）、蕎麥麵——選一家即可。住宿盛岡，隔天南下輕井澤／東京。</p>
+            <div class="t-title">巴士／計程車 → 猊鼻溪</div>
+            <p class="t-body">依班次與人數選擇巴士或計程車。旺季建議早到，預留售票與候船時間。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">10:30–12:30</div>
+          <div>
+            <div class="t-title">猊鼻溪遊船</div>
+            <p class="t-body">船程約 90 分鐘，票價約 1,900 日圓。船夫會唱「猊鼻追分」。小費／投幣習慣請備現金；實際票價與班次以現地為準。</p>
+            <p class="t-tip">建議備零錢；大行李勿帶上船，先寄放車站或飯店。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">12:30–13:30</div>
+          <div>
+            <div class="t-title">溪谷周邊午餐 · 休息</div>
+            <p class="t-body">船屋周邊簡易用餐、買伴手禮，稍作休息再返回一ノ関。</p>
+            <p class="t-meal">午餐：猊鼻溪周邊定食／輕食</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:30–15:00</div>
+          <div>
+            <div class="t-title">自由活動 · 返回一ノ関</div>
+            <p class="t-body">當日移動適中，下午留白剛好。可在溪谷或車站周邊休息後再北上。</p>
+            <ul class="t-steps">
+              <li>猊鼻溪 → 巴士／計程車 → 一ノ関</li>
+              <li>取回寄放行李（若有）</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">15:00–16:30</div>
+          <div>
+            <div class="t-title">一ノ関 → 盛岡</div>
+            <p class="t-body">新幹線或在來線北上至盛岡，辦理入住（住宿待訂，出發前確認）。</p>
+            <ul class="t-steps">
+              <li>一ノ関 → 東北新幹線／在來線 → 盛岡</li>
+              <li>前往預訂飯店 check-in</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:00–20:00</div>
+          <div>
+            <div class="t-title">盛岡三大麵晚餐</div>
+            <p class="t-body">盛岡冷麵、炸醬麵（じゃじゃ麺）、蕎麥麵——選一家即可。早點休息，隔天長途往輕井澤／東京。</p>
+            <p class="t-meal">晚餐：盛岡冷麵／じゃじゃ麺／蕎麥麵（擇一）</p>
           </div>
         </li>
       </ol>
@@ -690,31 +1606,115 @@
           <p class="detail-sub">高原散步 · 入住 APA Hotel Asakusa Kuramae（第 1／2 晚）</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>長途移動日</span>
+        <span>盛岡→大宮→輕井澤</span>
+        <span>景點擇一</span>
+        <span>APA 淺草藏前</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%9B%9B%E5%B2%A1%E9%A7%85" target="_blank" rel="noopener noreferrer">盛岡駅</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E8%BB%BD%E4%BA%95%E6%B2%A2%E9%A7%85" target="_blank" rel="noopener noreferrer">輕井澤駅</a>
+        <a class="map-btn" href="https://maps.app.goo.gl/3ztZEFXJ3SpAySe88" target="_blank" rel="noopener noreferrer">APA 藏前</a>
+      </div>
       <div class="photo-hero">
-        <img src="images/karuizawa.jpg" alt="輕井澤星野溫泉周邊綠意" width="1600" height="900" loading="lazy">
+        <img src="images/karuizawa.webp" alt="輕井澤星野溫泉周邊綠意" width="1600" height="900" loading="lazy">
         <div class="photo-caption">輕井澤 · 星野溫泉一帶（Wikimedia Commons）</div>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/forest.webp" alt="高原樹林" width="800" height="600" loading="lazy">
+          <figcaption>高原散步</figcaption>
+        </figure>
+        <figure>
+          <img src="images/japan-street.webp" alt="舊輕井澤銀座氛圍" width="800" height="600" loading="lazy">
+          <figcaption>舊輕井澤銀座（擇一）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/train.webp" alt="新幹線長途移動" width="800" height="600" loading="lazy">
+          <figcaption>盛岡 → 輕井澤 → 東京</figcaption>
+        </figure>
+        <figure>
+          <img src="images/sensoji.webp" alt="淺草寺雷門" width="800" height="600" loading="lazy">
+          <figcaption>淺草雷門（飯店附近）</figcaption>
+        </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">07:00–08:00</div>
           <div>
-            <div class="t-title">盛岡 → 輕井澤</div>
-            <p class="t-body">東北新幹線南下，多經大宮轉北陸新幹線至輕井澤。本日移動較長，行李可先寄 APA Hotel Asakusa Kuramae（若飯店接受提前寄送）或只帶當日包。</p>
+            <div class="t-title">盛岡退房 · 前往車站</div>
+            <p class="t-body">本日移動較長。行李可先寄 APA Hotel Asakusa Kuramae（若飯店接受提前寄送）或只帶當日包。</p>
+            <p class="t-meal">早餐：飯店／站前</p>
             <p class="t-tip">建議事先劃位；把「到達」當目標，景點別排太滿。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">08:00–11:30</div>
           <div>
-            <div class="t-title">輕井澤自由活動</div>
-            <p class="t-body">舊輕井澤銀座散步、Outlet，或雲場池擇一。高原比東京涼爽，適合慢慢走。</p>
+            <div class="t-title">盛岡 → 大宮（東北新幹線）</div>
+            <p class="t-body">南下至大宮換車。車程視班次約 2–2.5 小時，預留轉乘時間。</p>
+            <ul class="t-steps">
+              <li>盛岡 → 東北新幹線 → 大宮</li>
+              <li>大宮站內轉北陸新幹線（あさま／はくたか等）</li>
+            </ul>
           </div>
         </li>
         <li>
-          <div class="t-time">晚上</div>
+          <div class="t-time">11:30–12:30</div>
           <div>
-            <div class="t-title">抵達 APA Hotel Asakusa Kuramae</div>
-            <p class="t-body">自輕井澤搭新幹線進東京後，轉往藏前／淺草橋一帶入住。已預訂：2026/8/17–8/19（2 晚）。飯店近淺草寺、晴空塔，晚餐可在淺草或藏前簡單解決。</p>
+            <div class="t-title">大宮 → 輕井澤（北陸新幹線）</div>
+            <p class="t-body">約 1 小時左右至輕井澤。出站後依所選景點搭巴士或步行／計程車。</p>
+            <ul class="t-steps">
+              <li>大宮 → 北陸新幹線 → 輕井澤</li>
+              <li>出站後前往今日擇一景點</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">12:30–13:30</div>
+          <div>
+            <div class="t-title">輕井澤午餐</div>
+            <p class="t-body">高原比東京涼爽，適合慢慢用餐再散步。</p>
+            <p class="t-meal">午餐：輕井澤街邊／Outlet 美食</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:30–16:00</div>
+          <div>
+            <div class="t-title">輕井澤自由活動（擇一）</div>
+            <p class="t-body">時間有限，請三選一即可，勿硬塞全部：</p>
+            <ul class="t-steps">
+              <li>舊輕井澤銀座散步購物</li>
+              <li>輕井澤 Outlet</li>
+              <li>雲場池散步</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">16:00–17:30</div>
+          <div>
+            <div class="t-title">輕井澤 → 東京</div>
+            <p class="t-body">北陸新幹線返回東京方向（東京／上野等），再轉往藏前／淺草橋一帶。</p>
+            <ul class="t-steps">
+              <li>輕井澤 → 北陸新幹線 → 東京／上野</li>
+              <li>轉地鐵／都營淺草線等至藏前／淺草橋</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:00–19:00</div>
+          <div>
+            <div class="t-title">入住 APA Hotel Asakusa Kuramae</div>
+            <p class="t-body">已預訂 2026/8/17–8/19（2 晚）。飯店近淺草寺、晴空塔，取行李後再出門用餐。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">19:00–20:30</div>
+          <div>
+            <div class="t-title">淺草／藏前晚餐</div>
+            <p class="t-body">長途日晚餐從簡即可：蕎麥、定食或便利商店補給皆可。</p>
+            <p class="t-meal">晚餐：淺草／藏前定食</p>
           </div>
         </li>
       </ol>
@@ -732,40 +1732,122 @@
           <p class="detail-sub">東京近郊 · 續住 APA Hotel Asakusa Kuramae（第 2／2 晚）</p>
         </div>
       </div>
+      <div class="day-meta">
+        <span>東京近郊</span>
+        <span>高尾山纜車／吊椅</span>
+        <span>明治神宮</span>
+        <span>續住 APA</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%AB%98%E5%B0%BE%E5%B1%B1%E5%8F%A3%E9%A7%85" target="_blank" rel="noopener noreferrer">高尾山口</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%98%8E%E6%B2%BB%E7%A5%9E%E5%AE%AE" target="_blank" rel="noopener noreferrer">明治神宮</a>
+        <a class="map-btn" href="https://maps.app.goo.gl/3ztZEFXJ3SpAySe88" target="_blank" rel="noopener noreferrer">回 APA</a>
+      </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/takao2.jpg" alt="高尾山登山步道與樹林" width="1200" height="800" loading="lazy">
+          <img src="images/takao2.webp" alt="高尾山登山步道與樹林" width="1200" height="800" loading="lazy">
           <figcaption>高尾山步道（Wikimedia Commons）</figcaption>
         </figure>
         <figure>
-          <img src="images/meiji.jpg" alt="明治神宮參道樹林" width="900" height="1200" loading="lazy">
+          <img src="images/meiji.webp" alt="明治神宮參道樹林" width="900" height="1200" loading="lazy">
           <figcaption>明治神宮參道</figcaption>
         </figure>
         <figure>
-          <img src="images/tokyo-street.jpg" alt="東京夜景街道" width="900" height="675" loading="lazy">
-          <figcaption>晚上：新宿／澀谷輕鬆用餐</figcaption>
+          <img src="images/tokyo-street.webp" alt="東京夜景街道" width="900" height="675" loading="lazy">
+          <figcaption>晚上：淺草／藏前用餐</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/forest.webp" alt="高尾山樹林" width="800" height="600" loading="lazy">
+          <figcaption>高尾山林浴</figcaption>
+        </figure>
+        <figure>
+          <img src="images/takao.webp" alt="高尾山景色" width="800" height="600" loading="lazy">
+          <figcaption>高尾山展望</figcaption>
+        </figure>
+        <figure>
+          <img src="images/meiji.webp" alt="明治神宮參道" width="800" height="600" loading="lazy">
+          <figcaption>明治神宮參道</figcaption>
+        </figure>
+        <figure>
+          <img src="images/sensoji.webp" alt="淺草雷門" width="800" height="600" loading="lazy">
+          <figcaption>飯店近淺草雷門</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">07:00–07:30</div>
           <div>
-            <div class="t-title">高尾山</div>
-            <p class="t-body">京王線至高尾山口。家人建議搭纜車或吊椅上山，再走平緩路線；不必硬攻最陡步道。山頂可眺望關東平野（天氣好時）。</p>
+            <div class="t-title">早起出發（避開人潮）</div>
+            <p class="t-body">高尾山週末與連假易擠，平日也建議早到。輕裝、帶水與防曬。</p>
+            <p class="t-meal">早餐：便利商店／飯店</p>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">07:30–09:00</div>
           <div>
-            <div class="t-title">明治神宮</div>
-            <p class="t-body">原宿站步行即達。參道杉木成蔭，較市區涼爽。可順路逛表參道，但八月午後熱，參拜完即可回飯店休息。</p>
+            <div class="t-title">前往高尾山口</div>
+            <p class="t-body">自藏前／淺草一帶轉往<strong>京王線</strong>。京王線<strong>不在</strong> JR 東北周遊券範圍，請用 Suica／單獨購票。</p>
+            <ul class="t-steps">
+              <li>都營淺草線／地鐵 → 新宿（或適當轉乘站）</li>
+              <li>京王線 → 高尾山口（另購票）</li>
+              <li>步行至纜車／吊椅乘車處</li>
+            </ul>
           </div>
         </li>
         <li>
-          <div class="t-time">晚上</div>
+          <div class="t-time">09:00–12:00</div>
           <div>
-            <div class="t-title">返回藏前／淺草晚餐</div>
-            <p class="t-body">高尾與明治神宮離飯店較遠，回程可直接回 APA Hotel Asakusa Kuramae 附近用餐。明天退房並買伴手禮，不宜太晚。</p>
+            <div class="t-title">高尾山 · 纜車或吊椅 · 平緩步道</div>
+            <p class="t-body">家人建議搭纜車或吊椅上山，再走平緩路線；不必硬攻最陡步道。山頂天氣好時可眺望關東平野。</p>
+            <p class="t-tip">穿防滑鞋；雨後步道濕滑，量力而行。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">12:00–13:00</div>
+          <div>
+            <div class="t-title">山上或山腳午餐</div>
+            <p class="t-body">天狗燒、定食或便當皆可。用餐後下山返回市區。</p>
+            <p class="t-meal">午餐：高尾山天狗燒／定食</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:00–14:30</div>
+          <div>
+            <div class="t-title">下山 · 前往原宿／明治神宮</div>
+            <p class="t-body">返回京王線後轉往原宿方向。</p>
+            <ul class="t-steps">
+              <li>高尾山口 → 京王線 → 新宿／適當站</li>
+              <li>轉山手線等 → 原宿</li>
+              <li>步行進入明治神宮參道</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">14:30–16:00</div>
+          <div>
+            <div class="t-title">明治神宮參拜</div>
+            <p class="t-body">原宿站步行即達。參道杉木成蔭，較市區涼爽。可順路看表參道，但八月午後熱，參拜完即可離開。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">16:00–17:30</div>
+          <div>
+            <div class="t-title">返回 APA Hotel Asakusa Kuramae</div>
+            <p class="t-body">高尾與明治神宮離飯店較遠，建議直接回藏前休息，不宜再加景點。</p>
+            <ul class="t-steps">
+              <li>原宿 → 山手線／地鐵 → 上野／淺草橋／藏前</li>
+              <li>步行回 APA</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">18:00–20:00</div>
+          <div>
+            <div class="t-title">淺草／藏前晚餐</div>
+            <p class="t-body">在 APA 附近用餐即可。明天退房並買伴手禮，不宜太晚。</p>
+            <p class="t-meal">晚餐：淺草／藏前</p>
           </div>
         </li>
       </ol>
@@ -780,50 +1862,120 @@
         </div>
         <div>
           <h3 class="detail-title">上野 · 阿美橫丁 · 返程</h3>
-          <p class="detail-sub">退房 APA Hotel Asakusa Kuramae · 華航返高雄</p>
+          <p class="detail-sub">退房 APA · 成田 18:35 起飛 · 華航返高雄</p>
         </div>
+      </div>
+      <div class="day-meta">
+        <span>返國日</span>
+        <span>淺草寺（選）</span>
+        <span>阿美橫丁</span>
+        <span>CI 18:35→21:40</span>
+      </div>
+      <div class="day-maps">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%B5%85%E8%8D%89%E5%AF%BA" target="_blank" rel="noopener noreferrer">淺草寺</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%A1%E3%83%A4%E6%A8%AA%E4%B8%81" target="_blank" rel="noopener noreferrer">阿美橫丁</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%88%90%E7%94%B0%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF" target="_blank" rel="noopener noreferrer">成田空港</a>
       </div>
       <div class="photo-grid">
         <figure>
-          <img src="images/market.jpg" alt="市場美食攤位氣氛" width="1200" height="800" loading="lazy">
+          <img src="images/market.webp" alt="市場美食攤位氣氛" width="1200" height="800" loading="lazy">
           <figcaption>阿美橫丁掃貨氛圍</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=900&q=80&auto=format&fit=crop" alt="東京街頭" width="900" height="675" loading="lazy">
+          <img src="images/tokyo-day.webp" alt="東京街頭" width="900" height="675" loading="lazy">
           <figcaption>上野／東京街頭</figcaption>
         </figure>
         <figure>
-          <img src="images/plane.jpg" alt="返程班機" width="900" height="675" loading="lazy">
+          <img src="images/plane.webp" alt="返程班機" width="900" height="675" loading="lazy">
           <figcaption>18:35 起飛 → 21:40 高雄</figcaption>
+        </figure>
+      </div>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/sensoji.webp" alt="淺草寺雷門" width="800" height="600" loading="lazy">
+          <figcaption>淺草寺雷門（真景）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/sensoji2.webp" alt="淺草寺寶蔵門" width="800" height="600" loading="lazy">
+          <figcaption>淺草寺寶蔵門（真景）</figcaption>
+        </figure>
+        <figure>
+          <img src="images/market.webp" alt="阿美橫丁市集" width="800" height="600" loading="lazy">
+          <figcaption>阿美橫丁</figcaption>
+        </figure>
+        <figure>
+          <img src="images/tokyo-day.webp" alt="上野公園附近" width="800" height="600" loading="lazy">
+          <figcaption>上野周邊</figcaption>
         </figure>
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">上午</div>
+          <div class="t-time">08:00–09:00</div>
           <div>
-            <div class="t-title">退房後 · 上野 · 阿美橫丁</div>
-            <p class="t-body">APA Hotel Asakusa Kuramae 退房後，行李可寄放或直送機場（依飯店服務）。藏前／淺草到上野很近；阿美橫丁買藥妝、零食、泡麵。若時間夠，出發前可順路逛淺草寺。</p>
+            <div class="t-title">APA 退房 · 行李寄放或送機</div>
+            <p class="t-body">辦理退房。行李可寄放飯店，或直送<strong>成田空港</strong>（若有服務）。今日周遊券多半已用完（若 8/13–8/17 啟用），地鐵與機場交通另購／刷 Suica。</p>
+            <p class="t-meal">早餐：飯店／便利商店</p>
           </div>
         </li>
         <li>
-          <div class="t-time">下午</div>
+          <div class="t-time">09:00–10:30</div>
           <div>
-            <div class="t-title">前往機場</div>
-            <p class="t-body">依實際機場（成田／羽田）預留電車＋報到＋安檢時間。國際線建議起飛前 3 小時抵達機場較穩。</p>
+            <div class="t-title">（選）淺草寺</div>
+            <p class="t-body">飯店近淺草，時間夠可順路參拜、買少量伴手禮。人潮多時改走側街，勿拖延至中午以後。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">10:30–13:00</div>
+          <div>
+            <div class="t-title">上野 · 阿美橫丁購物</div>
+            <p class="t-body">藏前／淺草到上野很近。阿美橫丁買藥妝、零食、泡麵；控制體積與液體安檢規定。</p>
+            <ul class="t-steps">
+              <li>藏前／淺草 → 徒步或地鐵短程 → 上野</li>
+              <li>阿美橫丁掃貨（預留結帳與打包時間）</li>
+            </ul>
+            <p class="t-meal">午餐：阿美橫丁邊走邊吃／丼飯</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">13:00–14:00</div>
+          <div>
+            <div class="t-title">取行李 · 最後補給</div>
+            <p class="t-body">返回飯店取行李（若寄放），確認護照、機票與插座轉接頭皆已打包。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">14:30–15:00</div>
+          <div>
+            <div class="t-title">出發前往成田空港</div>
+            <p class="t-body">建議約 <strong>14:00–14:30</strong> 動身（成田比羽田遠），為 18:35 班機預留電車＋報到＋安檢。國際線建議起飛前約 3 小時抵機場。</p>
+            <ul class="t-steps">
+              <li>推薦：京成 Skyliner（上野／日暮里 → 成田，較快）</li>
+              <li>或：JR 成田特快 N'EX（需另購票；周遊券已過期則不可免票）</li>
+              <li>利木津巴士：行李多時可考慮，車程較長請更早出發</li>
+            </ul>
+            <p class="t-tip">自淺草／上野往成田，尖峰再加 20–30 分緩衝；液體與電池符合航空規定。</p>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">15:00–17:30</div>
+          <div>
+            <div class="t-title">抵達機場 · 報到安檢</div>
+            <p class="t-body">完成報到、託運、安檢與出境審查。剩餘時間可在免稅區休息。</p>
           </div>
         </li>
         <li>
           <div class="t-time">18:35</div>
           <div>
-            <div class="t-title">華航 東京 → 高雄</div>
+            <div class="t-title">華航起飛 · 成田 → 高雄</div>
             <p class="t-body">預計 21:40 抵達高雄。旅途結束，回家休息。</p>
+            <p class="t-meal">晚餐：機上餐</p>
           </div>
         </li>
       </ol>
     </article>
 
     <p class="photo-credit">
-      照片來源：Wikimedia Commons（松島、鳴子溫泉站、猊鼻溪、輕井澤、高尾山、明治神宮等，依各檔案授權使用）與 Unsplash（餐食、氛圍圖）。僅供個人行程網站展示。
+      照片來源：本機 images（瑞鳳殿、大崎八幡宮、政宗像、淺草雷門／寶蔵門、鳴子溫泉、仙台新幹線、AER、松島、猊鼻溪、明治神宮、高尾山等真景已離線存檔）。地圖仍開 Google Maps。
     </p>
   </section>
 
@@ -834,49 +1986,26 @@
       <p class="section-lead" style="margin-bottom:2rem">已寫進每日細項的幾口，到現場再依胃口加減。</p>
       <div class="food-grid">
         <article class="food-item">
-          <figure><img src="images/gyutan.jpg" alt="牛舌料理" width="600" height="450" loading="lazy"></figure>
+          <figure><img src="images/gyutan.webp" alt="牛舌料理" width="600" height="450" loading="lazy"></figure>
           <p class="food-when">DAY 1 晚餐</p>
           <h3 class="food-name">善治郎牛舌</h3>
           <p class="food-desc">上撰極厚真中牛舌定食——炭火慢烤，厚切如牛排。</p>
           <p class="food-loc">仙台站 3F 牛舌通／站前本店</p>
         </article>
         <article class="food-item">
-          <figure><img src="images/seafood.jpg" alt="海鮮丼" width="600" height="450" loading="lazy"></figure>
+          <figure><img src="images/seafood.webp" alt="海鮮丼" width="600" height="450" loading="lazy"></figure>
           <p class="food-when">DAY 2 上午</p>
           <h3 class="food-name">仙台朝市海鮮丼</h3>
           <p class="food-desc">平價新鮮的生魚片丼，或邊走邊吃現炸可樂餅。</p>
           <p class="food-loc">車站步行約 5 分鐘 · 週日多休</p>
         </article>
         <article class="food-item">
-          <figure><img src="images/onsen.jpg" alt="溫泉與點心氛圍" width="600" height="450" loading="lazy"></figure>
+          <figure><img src="images/onsen.webp" alt="溫泉與點心氛圍" width="600" height="450" loading="lazy"></figure>
           <p class="food-when">DAY 3 下午</p>
           <h3 class="food-name">鳴子 · 栗子糰子</h3>
           <p class="food-desc">深瀬等老店：熱麻糬包整顆栗子，淋醬油膏，配熱茶。</p>
           <p class="food-loc">鳴子溫泉站周邊</p>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="tips">
-    <p class="section-label">Notes</p>
-    <h2 class="section-title">行前提醒</h2>
-    <div class="tips-wrap">
-      <div class="tip">
-        <h3>交通</h3>
-        <p>東北段用 JR 東日本周遊券或區間票比價。Day 5 盛岡→輕井澤→東京最長，務必劃位。</p>
-      </div>
-      <div class="tip">
-        <h3>八月氣候</h3>
-        <p>濕熱。遮陽、扇子、電解質飲料備好；戶外景點（松島、高尾）盡量排上午。</p>
-      </div>
-      <div class="tip">
-        <h3>溫泉禮儀</h3>
-        <p>入浴前沖洗、毛巾不入池。若有刺青限制，選館前查官網。</p>
-      </div>
-      <div class="tip">
-        <h3>伴手禮</h3>
-        <p>生鮮留最後一天阿美橫丁或機場；牛舌仙貝、毛豆泥甜點可在仙台先買。</p>
       </div>
     </div>
   </section>
@@ -889,9 +2018,46 @@
   <script>
     (function () {
       const nav = document.getElementById("nav");
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("navMenu");
+
       const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
+
+      const setMenu = (open) => {
+        nav.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "關閉選單" : "開啟選單");
+      };
+
+      toggle.addEventListener("click", () => {
+        setMenu(!nav.classList.contains("is-open"));
+      });
+
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenu(false));
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setMenu(false);
+      });
+
+      const KEY = "tohoku-prep-checks";
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+
+      document.querySelectorAll(".check-list input[type=checkbox]:not([disabled])").forEach((box) => {
+        if (saved[box.id]) {
+          box.checked = true;
+          box.closest("li")?.classList.add("is-done");
+        }
+        box.addEventListener("change", () => {
+          saved[box.id] = box.checked;
+          box.closest("li")?.classList.toggle("is-done", box.checked);
+          try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* ignore */ }
+        });
+      });
     })();
   </script>
 </body>
