@@ -194,8 +194,33 @@ def unlocker_page(payload: dict[str, str]) -> str:
       }} catch (e) {{}}
     }}
 
+    function siteBase() {{
+      let path = location.pathname;
+      if (/\\/index\\.html?$/i.test(path)) path = path.replace(/\\/index\\.html?$/i, "/");
+      if (!path.endsWith("/")) path += "/";
+      return location.origin + path;
+    }}
+
+    function withAbsoluteAssets(html) {{
+      const base = siteBase();
+      let out = html;
+      if (!/<base\\s/i.test(out)) {{
+        out = out.replace(/<head([^>]*)>/i, `<head$1><base href="${{base}}">`);
+      }}
+      // Extra safety after document.write: force images/ CSS urls absolute
+      out = out.replace(
+        /(src|href)=(["'])(images\\/[^"']+)\\2/g,
+        (_, attr, q, path) => `${{attr}}=${{q}}${{base}}${{path}}${{q}}`
+      );
+      out = out.replace(
+        /url\\((["']?)(images\\/[^"')]+)\\1\\)/g,
+        (_, q, path) => `url(${{q}}${{base}}${{path}}${{q}})`
+      );
+      return out;
+    }}
+
     async function tryUnlock(password, save) {{
-      const html = await decryptWithPassword(password);
+      const html = withAbsoluteAssets(await decryptWithPassword(password));
       if (save) remember(password);
       document.open();
       document.write(html);
