@@ -6,7 +6,9 @@
   <title>東北旅繪 — 家族精華之旅</title>
   <meta name="description" content="2026 年 8 月 13–19 日家族行程：高雄⇄成田、JR東北周遊券5日、仙台、松島、鳴子、猊鼻溪、盛岡、輕井澤、東京。">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e3d34">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://poirotw66.github.io/tohoku-ryoei/">
   <meta property="og:title" content="東北旅繪 — 家族精華之旅">
@@ -22,7 +24,7 @@
       --fog: #e8f0ee;
       --pine: #2d5a4a;
       --pine-deep: #1e3d34;
-      --mist: #7a9e94;
+      --mist: #4c6a62;
       --gold: #c4a574;
       --gold-soft: #e8d5b5;
       --steam: #f2f7f5;
@@ -701,6 +703,37 @@
       font-size: 1.2rem; color: var(--gold-soft); margin-bottom: 0.5rem;
       letter-spacing: 0.08em;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      :root {
+        --ink: #000; --pine: #1a2a28; --pine-deep: #000;
+        --mist: #444; --gold: #6b5b3a; --gold-soft: #6b5b3a;
+        --steam: #000; --paper: #fff; --coral: #7a2e22;
+        --day-line: #ccc; --fog: #f2f2f2;
+      }
+      body { background: #fff; }
+      .nav, .quick-nav, footer, .cta-row, .day-jump,
+      .photo-hero, .photo-grid, .photo-strip, .food-item figure,
+      .map-btn, .day-maps { display: none !important; }
+      .hero { min-height: auto; padding: 1.5rem 0; isolation: auto; }
+      .hero-bg { display: none; }
+      .hero-inner { padding: 0; max-width: 100%; animation: none; }
+      .overview { background: none; padding: 1rem 0; border-bottom: 1px solid var(--day-line); }
+      .section { max-width: 100%; padding: 1.25rem 0; }
+      .food-strip { background: none; padding: 1.25rem 0; }
+      .detail, .map-card { page-break-inside: avoid; break-inside: avoid; }
+      .timeline li, .timeline-prep li { page-break-inside: avoid; break-inside: avoid; }
+      a[href] { color: var(--pine-deep); text-decoration: underline; }
+    }
   </style>
 </head>
 <body>
@@ -911,6 +944,15 @@
           <li><input type="checkbox" id="p27"><label for="p27">伴手禮策略：生鮮留 Day 7 阿美橫丁／機場</label></li>
         </ul>
       </div>
+    </div>
+
+    <h3 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">天氣速查</h3>
+    <p class="section-lead" style="margin-bottom:1rem">出發前 3 天再查一次，八月東北常有午後雷陣雨，輕便雨衣、雨傘備著。</p>
+    <div class="day-maps" style="margin-bottom:2.5rem">
+      <a class="map-btn" href="https://tenki.jp/forecast/2/7/3410/4100/" target="_blank" rel="noopener noreferrer">仙台天氣</a>
+      <a class="map-btn" href="https://tenki.jp/forecast/2/6/3310/3201/" target="_blank" rel="noopener noreferrer">盛岡天氣</a>
+      <a class="map-btn" href="https://tenki.jp/forecast/3/23/4820/20321/" target="_blank" rel="noopener noreferrer">輕井澤天氣</a>
+      <a class="map-btn" href="https://tenki.jp/forecast/3/16/4410/13106/" target="_blank" rel="noopener noreferrer">東京（台東區）天氣</a>
     </div>
 
     <div class="tips-wrap">
@@ -1225,7 +1267,7 @@
           <div class="t-time">17:30–18:30</div>
           <div>
             <div class="t-title">名掛丁商店街散步</div>
-            <p class="t-body">補水、買毛豆泥甜點或伴手禮當點心。天氣熱時可在拱廊內慢慢走。</p>
+            <p class="t-body">補水、買仙台名物「ずんだ餅」（毛豆泥麻糬）或伴手禮當點心。天氣熱時可在拱廊內慢慢走。</p>
           </div>
         </li>
         <li>
@@ -1618,7 +1660,7 @@
           <div class="t-time">12:30–13:30</div>
           <div>
             <div class="t-title">溪谷周邊午餐 · 休息</div>
-            <p class="t-body">船屋周邊簡易用餐、買伴手禮，稍作休息再返回一ノ関。</p>
+            <p class="t-body">船屋周邊簡易用餐、買伴手禮，稍作休息再返回一ノ関。一関市有「餅の里」之稱，若時間允許可試試在地的もち料理（紅豆、芝麻、毛豆泥等各式沾醬麻糬套餐）。</p>
             <p class="t-meal">午餐：猊鼻溪周邊定食／輕食</p>
           </div>
         </li>
@@ -1647,9 +1689,9 @@
         <li>
           <div class="t-time">18:00–20:00</div>
           <div>
-            <div class="t-title">盛岡三大麵晚餐</div>
-            <p class="t-body">盛岡冷麵、炸醬麵（じゃじゃ麺）、蕎麥麵——選一家即可。早點休息，隔天長途往輕井澤／東京。</p>
-            <p class="t-meal">晚餐：盛岡冷麵／じゃじゃ麺／蕎麥麵（擇一）</p>
+            <div class="t-title">岩手三大麵晚餐</div>
+            <p class="t-body">盛岡冷麵、炸醬麵（じゃじゃ麺）、碗子蕎麥麵（わんこそば）——選一家即可。碗子蕎麥麵是一口一碗、店員不斷幫你添麵的體驗，家人同樂很適合，但吃到飽也容易撐，量力而為。早點休息，隔天長途往輕井澤／東京。</p>
+            <p class="t-meal">晚餐：盛岡冷麵／じゃじゃ麺／碗子蕎麥麵（擇一）</p>
           </div>
         </li>
       </ol>
@@ -1736,7 +1778,7 @@
           <div class="t-time">12:30–13:30</div>
           <div>
             <div class="t-title">輕井澤午餐</div>
-            <p class="t-body">高原比東京涼爽，適合慢慢用餐再散步。</p>
+            <p class="t-body">高原比東京涼爽，適合慢慢用餐再散步。當地超市「ツルヤ」人氣麵包、丸山珈琲的咖啡都是輕井澤名物，順路可帶一份當下午茶。</p>
             <p class="t-meal">午餐：輕井澤街邊／Outlet 美食</p>
           </div>
         </li>
@@ -1869,8 +1911,8 @@
           <div class="t-time">12:00–13:00</div>
           <div>
             <div class="t-title">山上或山腳午餐</div>
-            <p class="t-body">天狗燒、定食或便當皆可。用餐後下山返回市區。</p>
-            <p class="t-meal">午餐：高尾山天狗燒／定食</p>
+            <p class="t-body">高尾山名物「とろろそば」（山藥泥蕎麥麵）清爽好消化，很適合爬山後食用；天狗燒、定食或便當也都可以。用餐後下山返回市區。</p>
+            <p class="t-meal">午餐：とろろそば／天狗燒／定食</p>
           </div>
         </li>
         <li>
@@ -1989,12 +2031,12 @@
           <div class="t-time">10:30–13:00</div>
           <div>
             <div class="t-title">上野 · 阿美橫丁購物</div>
-            <p class="t-body">藏前／淺草到上野很近。阿美橫丁買藥妝、零食、泡麵；控制體積與液體安檢規定。</p>
+            <p class="t-body">藏前／淺草到上野很近。阿美橫丁買藥妝、零食、泡麵；控制體積與液體安檢規定。邊走邊吃可試試現炸メンチカツ（炸肉餅）或立食壽司／海鮮攤，都是阿美橫丁招牌小吃。</p>
             <ul class="t-steps">
               <li>藏前／淺草 → 徒步或地鐵短程 → 上野</li>
               <li>阿美橫丁掃貨（預留結帳與打包時間）</li>
             </ul>
-            <p class="t-meal">午餐：阿美橫丁邊走邊吃／丼飯</p>
+            <p class="t-meal">午餐：メンチカツ／立食壽司／丼飯</p>
           </div>
         </li>
         <li>
@@ -2054,6 +2096,13 @@
           <p class="food-loc">仙台站 3F 牛舌通／站前本店</p>
         </article>
         <article class="food-item">
+          <figure><img src="images/japan-street.webp" alt="仙台商店街氛圍" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 1 晚上</p>
+          <h3 class="food-name">仙台 · ずんだ餅</h3>
+          <p class="food-desc">仙台最具代表性的甜點：毛豆泥包裹麻糬，微鹹回甘，名掛丁商店街隨處買得到。</p>
+          <p class="food-loc">名掛丁商店街</p>
+        </article>
+        <article class="food-item">
           <figure><img src="images/seafood.webp" alt="海鮮丼" width="600" height="450" loading="lazy"></figure>
           <p class="food-when">DAY 2 上午</p>
           <h3 class="food-name">仙台朝市海鮮丼</h3>
@@ -2066,6 +2115,20 @@
           <h3 class="food-name">鳴子 · 栗子糰子</h3>
           <p class="food-desc">深瀬等老店：熱麻糬包整顆栗子，淋醬油膏，配熱茶。</p>
           <p class="food-loc">鳴子溫泉站周邊</p>
+        </article>
+        <article class="food-item">
+          <figure><img src="images/ramen.webp" alt="岩手麵食" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 4 晚餐</p>
+          <h3 class="food-name">盛岡 · 岩手三大麵</h3>
+          <p class="food-desc">盛岡冷麵、じゃじゃ麺、碗子蕎麥麵（わんこそば）擇一——わんこそば是店員不斷添麵的體驗，家人同樂。</p>
+          <p class="food-loc">盛岡站周邊</p>
+        </article>
+        <article class="food-item">
+          <figure><img src="images/market.webp" alt="阿美橫丁小吃攤" width="600" height="450" loading="lazy"></figure>
+          <p class="food-when">DAY 7 午餐</p>
+          <h3 class="food-name">阿美橫丁 · 立食小吃</h3>
+          <p class="food-desc">現炸メンチカツ（炸肉餅）或立食壽司／海鮮攤，邊逛邊吃，適合返程前最後補給。</p>
+          <p class="food-loc">上野阿美橫丁</p>
         </article>
       </div>
     </div>

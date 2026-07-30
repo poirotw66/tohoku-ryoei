@@ -1,0 +1,15 @@
+{
+  "name": "東北旅繪 — 家族精華之旅",
+  "short_name": "東北旅繪",
+  "description": "2026 年 8 月家族東北行程：仙台、松島、鳴子、猊鼻溪、盛岡、輕井澤、東京。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7faf8",
+  "theme_color": "#1e3d34",
+  "lang": "zh-TW",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
