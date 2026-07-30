@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東北旅繪 — 家族精華之旅</title>
   <meta name="description" content="2026 年 8 月 13–19 日家族行程：高雄⇄成田、JR東北周遊券5日、仙台、松島、鳴子、猊鼻溪、盛岡、輕井澤、東京。">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://poirotw66.github.io/tohoku-ryoei/">
+  <meta property="og:title" content="東北旅繪 — 家族精華之旅">
+  <meta property="og:description" content="2026 年 8 月 13–19 日家族行程：高雄⇄成田、JR東北周遊券5日、仙台、松島、鳴子、猊鼻溪、盛岡、輕井澤、東京。">
+  <meta property="og:image" content="https://poirotw66.github.io/tohoku-ryoei/images/matsushima2.webp">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
@@ -136,6 +144,41 @@
       .nav { padding: 1.1rem 3rem; }
       .nav-toggle { display: none; }
       .nav-links { display: flex; }
+    }
+
+    .quick-nav {
+      position: fixed; left: 0; right: 0; z-index: 95;
+      background: rgba(247, 250, 248, 0.95);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(26, 42, 40, 0.06);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    }
+    .quick-nav.is-visible { opacity: 1; visibility: visible; }
+    .quick-nav.is-hidden-menu { opacity: 0; visibility: hidden; }
+    .quick-nav-inner {
+      display: flex; gap: 0.4rem;
+      overflow-x: auto;
+      padding: 0.55rem 1.5rem;
+      max-width: 1100px; margin: 0 auto;
+      scrollbar-width: none;
+    }
+    .quick-nav-inner::-webkit-scrollbar { display: none; }
+    .quick-nav-inner a {
+      flex: 0 0 auto;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--mist);
+      border: 1px solid var(--day-line);
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .quick-nav-inner a:hover,
+    .quick-nav-inner a.is-active {
+      background: var(--pine); border-color: var(--pine); color: var(--steam);
+    }
+    @media (min-width: 768px) {
+      .quick-nav-inner { padding: 0.55rem 3rem; }
     }
 
     .map-btn {
@@ -287,6 +330,7 @@
 
     .section {
       padding: 4.5rem 1.5rem; max-width: 1100px; margin: 0 auto;
+      scroll-margin-top: 7.5rem;
     }
     @media (min-width: 768px) { .section { padding: 5.5rem 3rem; } }
     .section-label {
@@ -339,7 +383,7 @@
     .detail {
       padding: 3.5rem 0;
       border-bottom: 1px solid var(--day-line);
-      scroll-margin-top: 5rem;
+      scroll-margin-top: 7.5rem;
     }
     .detail:last-of-type { border-bottom: none; }
     .detail-head {
@@ -480,6 +524,7 @@
 
     .food-strip {
       background: var(--fog); padding: 4.5rem 1.5rem;
+      scroll-margin-top: 7.5rem;
     }
     .food-inner { max-width: 1100px; margin: 0 auto; }
     .food-grid {
@@ -673,6 +718,22 @@
       <li><a href="#food">美食</a></li>
     </ul>
   </nav>
+
+  <div class="quick-nav" id="quickNav" aria-label="快速跳轉列">
+    <div class="quick-nav-inner">
+      <a href="#prep">行前準備</a>
+      <a href="#maps">地圖</a>
+      <a href="#summary">總表</a>
+      <a href="#day1">Day 1</a>
+      <a href="#day2">Day 2</a>
+      <a href="#day3">Day 3</a>
+      <a href="#day4">Day 4</a>
+      <a href="#day5">Day 5</a>
+      <a href="#day6">Day 6</a>
+      <a href="#day7">Day 7</a>
+      <a href="#food">美食</a>
+    </div>
+  </div>
 
   <header class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
@@ -2020,13 +2081,25 @@
       const nav = document.getElementById("nav");
       const toggle = document.getElementById("navToggle");
       const menu = document.getElementById("navMenu");
+      const quickNav = document.getElementById("quickNav");
 
-      const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
+      const positionQuickNav = () => {
+        quickNav.style.top = nav.getBoundingClientRect().height + "px";
+      };
+      positionQuickNav();
+      window.addEventListener("resize", positionQuickNav);
+
+      const onScroll = () => {
+        const scrolled = window.scrollY > 40;
+        nav.classList.toggle("is-scrolled", scrolled);
+        quickNav.classList.toggle("is-visible", scrolled);
+      };
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
 
       const setMenu = (open) => {
         nav.classList.toggle("is-open", open);
+        quickNav.classList.toggle("is-hidden-menu", open);
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
         toggle.setAttribute("aria-label", open ? "關閉選單" : "開啟選單");
       };
@@ -2041,6 +2114,27 @@
 
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") setMenu(false);
+      });
+
+      const quickLinks = {};
+      quickNav.querySelectorAll("a").forEach((a) => {
+        quickLinks[a.getAttribute("href").slice(1)] = a;
+      });
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const link = quickLinks[entry.target.id];
+            if (!link) return;
+            Object.values(quickLinks).forEach((a) => a.classList.remove("is-active"));
+            link.classList.add("is-active");
+          });
+        },
+        { rootMargin: "-45% 0px -45% 0px" }
+      );
+      Object.keys(quickLinks).forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) sectionObserver.observe(el);
       });
 
       const KEY = "tohoku-prep-checks";

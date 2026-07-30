@@ -55,6 +55,13 @@ def unlocker_page(payload: dict[str, str]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
   <title>東北旅繪 · 家人專用</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://poirotw66.github.io/tohoku-ryoei/">
+  <meta property="og:title" content="東北旅繪 · 家人專用">
+  <meta property="og:description" content="家族東北行程（需密碼），點開後輸入通行密碼即可查看。">
+  <meta name="twitter:card" content="summary">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
