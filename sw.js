@@ -1,4 +1,4 @@
-const CACHE_NAME = "tohoku-ryoei-v1";
+const CACHE_NAME = "tohoku-ryoei-v2";
 const CORE_FILES = [
   "./",
   "./index.html",
@@ -35,14 +35,18 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
+    const isAppShell = url.pathname.endsWith("/") || /\/index(?:\.html)?$/.test(url.pathname);
+    if (!isAppShell) return;
     event.respondWith(
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html"))
+        .catch(() => caches.match(request)
+          .then((cached) => cached || caches.match("./index.html"))
+          .then((cached) => cached || caches.match("./")))
     );
     return;
   }
@@ -60,5 +64,16 @@ self.addEventListener("fetch", (event) => {
         .catch(() => cached);
       return cached || network;
     })
+  );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type !== "CACHE_URLS" || !Array.isArray(event.data.urls)) return;
+  const urls = event.data.urls.filter((value) => typeof value === "string");
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(urls))
+      .then(() => event.source?.postMessage({ type: "CACHE_COMPLETE", ok: true }))
+      .catch(() => event.source?.postMessage({ type: "CACHE_COMPLETE", ok: false }))
   );
 });

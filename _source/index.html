@@ -929,6 +929,53 @@
     }
     .offline-status.is-visible { opacity: 1; transform: none; }
 
+    .essential-grid {
+      display: grid; gap: 0.75rem; margin-top: 1.25rem;
+    }
+    .essential-card {
+      padding: 0.9rem 1rem; border: 1px solid var(--day-line);
+      border-radius: 0.65rem; background: rgba(255,255,255,0.72);
+    }
+    .essential-card strong { display: block; color: var(--pine-deep); margin-bottom: 0.2rem; }
+    .essential-card p { color: var(--mist); font-size: 0.82rem; }
+    .copy-btn, .offline-download {
+      display: inline-flex; align-items: center; min-height: 2.6rem;
+      margin-top: 0.65rem; padding: 0.45rem 0.8rem;
+      border: 1px solid var(--day-line); border-radius: 0.45rem;
+      background: #fff; color: var(--pine-deep); font: 700 0.78rem/1.2 var(--font-body);
+      cursor: pointer;
+    }
+    .priority-tag {
+      display: inline-flex; margin: 0.35rem 0.35rem 0 0; padding: 0.2rem 0.5rem;
+      border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      background: #fff3dd; color: #815815;
+    }
+    .priority-tag.optional { background: var(--fog); color: var(--mist); }
+    .priority-tag.backup { background: #e8f3ef; color: var(--pine); }
+    .reservation-notes { margin-top: 1.25rem; }
+    .reservation-notes h3 { font: 700 1rem/1.4 var(--font-display); color: var(--pine-deep); }
+    .reservation-grid { display: grid; gap: 0.65rem; margin-top: 0.65rem; }
+    .reservation-grid label { display: grid; gap: 0.25rem; color: var(--mist); font-size: 0.76rem; font-weight: 700; }
+    .reservation-grid input {
+      width: 100%; min-height: 2.7rem; padding: 0.55rem 0.7rem;
+      border: 1px solid var(--day-line); border-radius: 0.45rem;
+      background: #fff; color: var(--ink); font: 500 0.84rem/1.3 var(--font-body);
+    }
+    @media (min-width: 700px) { .reservation-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 700px) { .essential-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 639px) {
+      body { padding-bottom: 3.9rem; }
+      .hero { min-height: 72svh; }
+      .hero-inner { padding: 0 1.2rem 2rem; }
+      .hero-brand { font-size: 2.45rem; }
+      .hero-lead { font-size: 0.92rem; margin-bottom: 1rem; }
+      .hero-meta { gap: 0.35rem 0.85rem; margin-bottom: 1.1rem; }
+      .quick-nav { top: auto !important; bottom: 0; box-shadow: 0 -1px 14px rgba(26,42,40,.1); }
+      .quick-nav-inner { padding: 0.45rem 0.75rem calc(0.45rem + env(safe-area-inset-bottom)); }
+      .quick-nav-inner a { min-height: 2.55rem; }
+      .offline-status { bottom: 4.5rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -1030,7 +1077,22 @@
       <p class="trip-now-kicker" id="todayStatus">旅途首頁</p>
       <h2 class="trip-now-title" id="todayTitle">正在整理今日行程</h2>
       <div id="todayContent" aria-live="polite"></div>
-      <p class="trip-updated">行程最後更新：<time datetime="2026-08-04">2026/8/4</time> · 班次、票價與天氣請於出發前再次確認。</p>
+      <div class="essential-grid" aria-label="旅途關鍵資訊">
+        <div class="essential-card"><strong>交通票券</strong><p>JR EAST PASS 東北地區 · 成人 ¥35,000 · 8/13–8/17 連續使用</p><span class="priority-tag">指定席立即預約</span></div>
+        <div class="essential-card"><strong>返程航廈</strong><p>華航 CI · 成田空港第 2 航廈 3F · 8/19 18:35</p><span class="priority-tag">15:20 前抵達</span></div>
+        <div class="essential-card"><strong>緊急資訊</strong><p>日本警察 110 · 救護／消防 119 · 旅外急難 +81-3-3280-7917</p><span class="priority-tag backup">離線可查</span></div>
+      </div>
+      <div class="reservation-notes">
+        <h3>指定席／車次備忘</h3>
+        <div class="reservation-grid">
+          <label>Day 1 N'EX＋東京→仙台<input data-travel-note="day1-seat" placeholder="例：N'EX ＿號／はやぶさ ＿號・＿車＿席"></label>
+          <label>Day 4 仙台→一ノ関→盛岡<input data-travel-note="day4-seat" placeholder="填入車次、時間與座位"></label>
+          <label>Day 5 盛岡→大宮→輕井澤→東京<input data-travel-note="day5-seat" placeholder="填入各段車次與座位"></label>
+          <label>Day 7 Skyliner<input data-travel-note="day7-seat" placeholder="例：14:20 京成上野發・＿車＿席"></label>
+        </div>
+      </div>
+      <button type="button" class="offline-download" id="offlineDownload">下載完整離線包</button>
+      <p class="trip-updated">行程最後更新：<time datetime="2026-08-07">2026/8/7</time> · 出發前仍請確認指定席、天氣與臨時運行資訊。</p>
     </div>
   </section>
 
@@ -1041,7 +1103,7 @@
 
     <div class="prep-banner">
       <strong>出發日：2026/8/13（四）· 華航高雄 → 成田</strong>
-      <p>返程 8/19（三）18:35 自成田起飛。交通已決定使用 <strong>JR 東日本鐵路周遊券（東北地區）5 日</strong>；建議自 8/13 啟用至 8/17（含成田特快 N'EX、東北新幹線、鳴子、盛岡→輕井澤→東京）。8/18–8/19 高尾（京王線）與返程成田另購票。</p>
+      <p>返程 8/19（三）18:35 自成田第 2 航廈起飛。使用 <strong>JR EAST PASS（東北地區）5 日，成人 ¥35,000</strong>，8/13–8/17 連續啟用（含 N'EX、東北／北陸新幹線、鳴子與猊鼻溪）。8/18–8/19 京王線、地鐵與返程 Skyliner 另購票。8/7–8/16 為盂蘭盆尖峰，長途指定席請立即預約。</p>
     </div>
 
     <h3 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">預訂現況</h3>
@@ -1088,7 +1150,7 @@
           </tr>
           <tr>
             <td>交通票券</td>
-            <td>JR 東日本鐵路周遊券（東北地區）<strong>5 日</strong><br>建議啟用：8/13–8/17（連續五日）</td>
+            <td>JR EAST PASS（東北地區）<strong>5 日／成人 ¥35,000</strong><br>啟用：8/13–8/17（連續五日）</td>
             <td class="ok">已決定</td>
           </tr>
         </tbody>
@@ -1154,9 +1216,13 @@
           <li class="is-done"><input type="checkbox" id="p8" checked disabled><label for="p8">JR 東日本周遊券（東北）5 日已決定<span class="done-tag">已決定</span></label></li>
           <li><input type="checkbox" id="p8b"><label for="p8b">周遊券已線上購買／兌換單存好（建議啟用 8/13–8/17）</label></li>
           <li><input type="checkbox" id="p9"><label for="p9">成田→東京（N'EX）與東京→仙台新幹線劃位（Day 1）</label></li>
+          <li><input type="checkbox" id="p9b"><label for="p9b">仙台→一ノ関→盛岡指定席、猊鼻溪 JR／船班銜接確認（Day 4）</label></li>
           <li><input type="checkbox" id="p10"><label for="p10">盛岡→輕井澤→東京劃位（Day 5）</label></li>
+          <li><input type="checkbox" id="p10b"><label for="p10b">確認 APA 可代收宅配，8/16 從 KOKO 寄出大行李</label></li>
+          <li><input type="checkbox" id="p10c"><label for="p10c">購買／預留 8/19 約 14:20 京成上野→成田 T2 Skyliner</label></li>
           <li><input type="checkbox" id="p11"><label for="p11">準備 eSIM／隨身 Wi-Fi／漫遊其一</label></li>
           <li><input type="checkbox" id="p12"><label for="p12">下載轉乘 App、離線地圖</label></li>
+          <li><input type="checkbox" id="p12b"><label for="p12b">在網站按「下載完整離線包」並開飛航模式測試</label></li>
           <li><input type="checkbox" id="p13"><label for="p13">Suica／Pasmo（手機或實體卡）— 地鐵／京王線用</label></li>
         </ul>
       </div>
@@ -1478,7 +1544,7 @@
           </div>
         </li>
         <li>
-          <div class="t-time">12:35–14:00</div>
+          <div class="t-time">12:35–15:00</div>
           <div>
             <div class="t-title">成田空港 · 換周遊券 · 轉往東京</div>
             <p class="t-body">入境領行李後，至 JR 東日本旅行服務中心／綠色窗口<strong>兌換 JR 東日本鐵路周遊券（東北地區）5 日</strong>，建議當日啟用（用至 8/17）。</p>
@@ -1487,19 +1553,19 @@
               <li>同日劃位：東京 → 仙台東北新幹線（はやぶさ／やまびこ）</li>
               <li>啟用 eSIM／Wi-Fi；大行李放新幹線大型置物區</li>
             </ul>
-            <p class="t-tip">成田換票＋劃位尖峰可能排隊，預留緩衝；N'EX 盡量劃指定席。</p>
+            <p class="t-tip">8/13 正值盂蘭盆移動尖峰；N'EX 與東京→仙台請事前劃位。若入境或換票延誤，以入住與晚餐為主。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">14:00–16:30</div>
+          <div class="t-time">15:00–18:30</div>
           <div>
             <div class="t-title">東北新幹線 東京 → 仙台</div>
-            <p class="t-body">約 1.5–2 小時。車內可補水、吃便當；到站後出西口方向較近飯店。</p>
+            <p class="t-body">含東京站轉乘緩衝，預計傍晚抵達仙台。車內可補水、吃便當；到站後出西口方向較近飯店。</p>
             <p class="t-meal">午餐：車站／車內便當</p>
           </div>
         </li>
         <li>
-          <div class="t-time">16:30–17:30</div>
+          <div class="t-time">17:30–19:00</div>
           <div>
             <div class="t-title">辦理入住 · KOKO HOTEL 仙台駅前 West</div>
             <p class="t-body">地址：宮城県仙台市青葉区中央 3-8-27，〒980-0021。已預訂 2026/8/13–8/16（3 晚）。車站西口徒步可達。</p>
@@ -1511,27 +1577,23 @@
           </div>
         </li>
         <li>
-          <div class="t-time">17:30–18:30</div>
+          <div class="t-time">19:00–20:30</div>
           <div>
-            <div class="t-title">名掛丁商店街散步</div>
-            <p class="t-body">補水、買仙台名物「ずんだ餅」（毛豆泥麻糬）或伴手禮當點心。天氣熱時可在拱廊內慢慢走。</p>
+            <div class="t-title">站前晚餐 · 名掛丁商店街（選）</div>
+            <p class="t-body">優先吃善治郎牛舌或站前定食；有體力再短逛名掛丁。抵達晚或排隊過長時，直接用餐後回飯店。</p>
+            <span class="priority-tag">必做：入住＋晚餐</span><span class="priority-tag optional">可刪：商店街</span>
           </div>
         </li>
         <li>
-          <div class="t-time">18:30–19:30</div>
+          <div class="t-time">20:00–20:45</div>
           <div>
             <div class="t-title">AER 展望台</div>
-            <p class="t-body">AER 大樓展望台可看仙台夜景與街景。時間緊則可縮短，優先晚餐排隊。</p>
+            <p class="t-body">只在抵達順利且家人體力充足時前往；否則取消，不影響後續行程。</p>
+            <span class="priority-tag optional">可刪景點</span>
           </div>
         </li>
         <li>
-          <div class="t-time">19:30–21:00</div>
-          <div>
-            <div class="t-title">善治郎牛舌晚餐</div>
-            <p class="t-body">推薦「上撰極厚真中牛舌定食」。仙台站 3F 牛舌通或站前本店皆可，尖峰請提早或候位。</p>
-            <p class="t-meal">晚餐：善治郎牛舌定食</p>
-            <p class="t-tip">長途日：晚餐後早點休息，為隔天松島留體力。</p>
-          </div>
+          <div class="t-time">20:45</div><div><div class="t-title">返回 KOKO 休息</div><p class="t-body">長途移動日不再增加景點，整理隔日隨身包並早睡。</p></div>
         </li>
       </ol>
     </article>
@@ -1608,7 +1670,7 @@
           </div>
         </li>
         <li>
-          <div class="t-time">08:40–09:30</div>
+          <div class="t-time">08:30–09:20</div>
           <div>
             <div class="t-title">JR 仙石線 → 松島海岸</div>
             <p class="t-body">約 40 分鐘。建議上午抵達，避開正午強日。</p>
@@ -1620,10 +1682,10 @@
           </div>
         </li>
         <li>
-          <div class="t-time">09:30–11:30</div>
+          <div class="t-time">09:30–11:00</div>
           <div>
-            <div class="t-title">松島散步 · 五大堂 · 福浦橋</div>
-            <p class="t-body">走福浦橋看灣內島群，五大堂紅橋好拍。八月正午熱，建議上午逛完再找陰涼處休息。</p>
+            <div class="t-title">松島散步 · 五大堂 · 瑞巖寺</div>
+            <p class="t-body">五大堂、瑞巖寺與福浦橋請擇二，避免為了集點而一直趕路。八月正午熱，途中安排室內或陰涼休息。</p>
           </div>
         </li>
         <li>
@@ -1635,37 +1697,42 @@
           </div>
         </li>
         <li>
-          <div class="t-time">12:00–13:00</div>
+          <div class="t-time">12:10–13:20</div>
           <div>
-            <div class="t-title">松島午餐 · 返回仙台</div>
-            <p class="t-body">車站周邊或灣邊簡易午餐後，原路搭仙石線回仙台。</p>
+            <div class="t-title">松島午餐</div>
+            <p class="t-body">灣邊或車站周邊用餐，不把回程車程塞進午餐時段。</p>
             <p class="t-meal">午餐：松島海鮮／牡蠣料理（依胃口）</p>
             <ul class="t-steps">
+              <li>13:30 左右步行回松島海岸站</li>
               <li>松島海岸 → JR 仙石線 → 仙台</li>
-              <li>回站後轉市內巴士或計程車往瑞鳳殿</li>
             </ul>
           </div>
         </li>
         <li>
           <div class="t-time">13:30–15:00</div>
+          <div><div class="t-title">返回仙台 · 補水休息</div><p class="t-body">抵達仙台後視時間與體力決定是否前往瑞鳳殿；若 15:30 尚未離開仙台站，直接改去仙台城跡。</p></div>
+        </li>
+        <li>
+          <div class="t-time">15:20–16:30</div>
           <div>
             <div class="t-title">① 瑞鳳殿</div>
-            <p class="t-body">伊達政宗之靈屋，極彩色華麗。可由松島返回仙台後，搭市內巴士或觀光路線前往。</p>
+            <p class="t-body">最晚 16:30 入場；從仙台站搭計程車最穩。入口陡坡且約 80 階，長輩或膝蓋不適者改去仙台城跡。</p>
+            <span class="priority-tag">注意末入場</span><span class="priority-tag backup">無障礙備案：仙台城跡</span>
           </div>
         </li>
         <li>
-          <div class="t-time">15:00–16:30</div>
+          <div class="t-time">16:45–18:00</div>
           <div>
             <div class="t-title">② 仙台城跡（青葉山）</div>
-            <p class="t-body">可看政宗騎馬像與市區展望。與瑞鳳殿同區，步行或短程移動即可串連。</p>
+            <p class="t-body">看政宗騎馬像與市區展望，作為本日最後一站；從瑞鳳殿建議搭車移動，不以步行硬串。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">16:30–18:00</div>
+          <div class="t-time">備案</div>
           <div>
             <div class="t-title">③（選）大崎八幡宮</div>
-            <p class="t-body">國寶社殿，金箔與漆工華麗，傍晚光線好看。體力不足可省略，優先瑞鳳殿＋城跡。</p>
-            <p class="t-tip">若體力不足，大崎八幡宮可改隔天或省略。</p>
+            <p class="t-body">不再列入當日正式動線；只有取消觀光船或松島提早結束時才考慮。</p>
+            <span class="priority-tag optional">預設取消</span>
           </div>
         </li>
         <li>
@@ -1736,7 +1803,7 @@
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">07:30–08:00</div>
+          <div class="t-time">07:30–08:20</div>
           <div>
             <div class="t-title">飯店出發 · 仙台站朝食</div>
             <p class="t-body">簡單早餐後出發。出發前先查好陸羽東線往返時刻——班次較疏。</p>
@@ -1744,27 +1811,27 @@
           </div>
         </li>
         <li>
-          <div class="t-time">08:00–09:30</div>
+          <div class="t-time">08:20–10:10</div>
           <div>
             <div class="t-title">仙台 → 古川 → 鳴子溫泉</div>
-            <p class="t-body">單程約 1–1.5 小時。<strong>JR 東北周遊券</strong>可搭新幹線與陸羽東線。</p>
+            <p class="t-body">先搭新幹線至古川，目標銜接週末 <strong>09:19 古川發</strong>的陸羽東線，約 10:06 抵達鳴子溫泉。<strong>JR EAST PASS</strong>適用。</p>
             <ul class="t-steps">
               <li>仙台 → 東北新幹線 → 古川（約 15 分）</li>
               <li>古川 → JR 陸羽東線 → 鳴子溫泉（約 45 分）</li>
               <li>鳴子溫泉站出站即近足湯與湯屋區</li>
             </ul>
-            <p class="t-tip">陸羽東線班次稀疏，請先鎖定去程與回程班次再出發。</p>
+            <p class="t-tip">鳴子溫泉～新庄仍因災害停駛，但本行程由古川往返鳴子溫泉，不受停駛區間影響。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">09:30–10:00</div>
+          <div class="t-time">10:10–10:30</div>
           <div>
             <div class="t-title">站前免費足湯</div>
             <p class="t-body">先泡足暖身、拍車站建築，再決定日歸湯屋。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">10:00–12:30</div>
+          <div class="t-time">10:30–12:30</div>
           <div>
             <div class="t-title">日歸溫泉</div>
             <p class="t-body">選一家開放日歸的湯屋放鬆。攜帶小毛巾／換洗衣物較方便；貴重物品寄放櫃。</p>
@@ -1786,10 +1853,10 @@
           </div>
         </li>
         <li>
-          <div class="t-time">15:00–16:30</div>
+          <div class="t-time">15:40 或 17:15</div>
           <div>
             <div class="t-title">返回仙台</div>
-            <p class="t-body">原路折返。務必對準預查的回程班次，避免末班錯過。</p>
+            <p class="t-body">優先搭 15:40 回程；若已事先確認晚一班，才使用 17:15。不要到車站後才決定。</p>
             <ul class="t-steps">
               <li>鳴子溫泉 → 陸羽東線 → 古川</li>
               <li>古川 → 東北新幹線 → 仙台</li>
@@ -1873,8 +1940,9 @@
           <div class="t-time">07:30–08:30</div>
           <div>
             <div class="t-title">KOKO 退房 · 行李安排</div>
-            <p class="t-body">辦理退房（8/16）。大行李可先寄放一ノ関站、送往盛岡飯店，或僅帶當日小包前往猊鼻溪。</p>
+            <p class="t-body">辦理退房後，把大行李由 KOKO 宅配至東京 APA（請先確認 APA 可代收，填住宿日與訂房姓名）；只帶一晚小包走猊鼻溪、盛岡與輕井澤。</p>
             <p class="t-meal">早餐：飯店／站前</p>
+            <span class="priority-tag">最省力方案</span><span class="priority-tag backup">宅配不可用：一ノ関寄物櫃</span>
           </div>
         </li>
         <li>
@@ -1884,22 +1952,23 @@
             <p class="t-body">東北新幹線北上，約 30–40 分鐘至一ノ関。</p>
             <ul class="t-steps">
               <li>仙台 → 東北新幹線 → 一ノ関</li>
-              <li>站前轉巴士或計程車前往猊鼻溪</li>
+              <li>一ノ関站轉 JR 大船渡線往氣仙沼方向</li>
             </ul>
           </div>
         </li>
         <li>
-          <div class="t-time">09:30–10:30</div>
+          <div class="t-time">依預約車次</div>
           <div>
-            <div class="t-title">巴士／計程車 → 猊鼻溪</div>
-            <p class="t-body">依班次與人數選擇巴士或計程車。旺季建議早到，預留售票與候船時間。</p>
+            <div class="t-title">JR 大船渡線 → 猊鼻溪站</div>
+            <p class="t-body">一ノ関至猊鼻溪約 29 分，JR EAST PASS 適用；下車後步行前往碼頭。大船渡線班次很疏，先用遊船時間反推火車。</p>
+            <p class="t-tip">巴士／計程車改列為錯過 JR 時的備案。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">10:30–12:30</div>
+          <div class="t-time">建議 11:00 船班</div>
           <div>
             <div class="t-title">猊鼻溪遊船</div>
-            <p class="t-body">船程約 90 分鐘，票價約 1,900 日圓。船夫會唱「猊鼻追分」。小費／投幣習慣請備現金；實際票價與班次以現地為準。</p>
+            <p class="t-body">船程約 90 分鐘。4/1–11/5 通常有 10:00、11:00、12:00、13:00 等班次；旺季可能加班，仍以官方當日公告為準。</p>
             <p class="t-tip">建議備零錢；大行李勿帶上船，先寄放車站或飯店。</p>
           </div>
         </li>
@@ -1917,7 +1986,7 @@
             <div class="t-title">自由活動 · 返回一ノ関</div>
             <p class="t-body">當日移動適中，下午留白剛好。可在溪谷或車站周邊休息後再北上。</p>
             <ul class="t-steps">
-              <li>猊鼻溪 → 巴士／計程車 → 一ノ関</li>
+              <li>猊鼻溪站 → JR 大船渡線 → 一ノ関</li>
               <li>取回寄放行李（若有）</li>
             </ul>
           </div>
@@ -1994,7 +2063,7 @@
           <div class="t-time">07:00–08:00</div>
           <div>
             <div class="t-title">盛岡退房 · 前往車站</div>
-            <p class="t-body">本日移動較長。行李可先寄 APA Hotel Asakusa Kuramae（若飯店接受提前寄送）或只帶當日包。</p>
+            <p class="t-body">本日只帶一晚小包；大行李已於 8/16 從仙台宅配至東京 APA。若宅配未採用，輕井澤站寄物櫃可能在旺季客滿，需準備人工行李寄存備案。</p>
             <p class="t-meal">早餐：飯店／站前</p>
             <p class="t-tip">建議事先劃位；把「到達」當目標，景點別排太滿。</p>
           </div>
@@ -2056,7 +2125,7 @@
           <div class="t-time">18:00–19:00</div>
           <div>
             <div class="t-title">入住 APA Hotel Asakusa Kuramae</div>
-            <p class="t-body">已預訂 2026/8/17–8/19（2 晚）。飯店近淺草寺、晴空塔，取行李後再出門用餐。</p>
+            <p class="t-body">已預訂 2026/8/17–8/19（2 晚）。辦理入住並領取宅配行李；若尚未送達，請櫃檯協助確認配送單號。</p>
           </div>
         </li>
         <li>
@@ -2132,6 +2201,8 @@
             <div class="t-title">早起出發（避開人潮）</div>
             <p class="t-body">高尾山週末與連假易擠，平日也建議早到。輕裝、帶水與防曬。</p>
             <p class="t-meal">早餐：便利商店／飯店</p>
+            <p class="t-tip">若上午預報超過 33°C、雷雨或家人體力不佳，取消高尾山，改為明治神宮早訪＋上野／室內景點。</p>
+            <span class="priority-tag backup">高溫／雨天備案</span>
           </div>
         </li>
         <li>
@@ -2260,46 +2331,47 @@
       </div>
       <ol class="timeline">
         <li>
-          <div class="t-time">08:00–09:00</div>
+          <div class="t-time">08:00–09:15</div>
           <div>
-            <div class="t-title">APA 退房 · 行李寄放或送機</div>
-            <p class="t-body">辦理退房。行李可寄放飯店，或直送<strong>成田空港</strong>（若有服務）。今日周遊券多半已用完（若 8/13–8/17 啟用），地鐵與機場交通另購／刷 Suica。</p>
+            <div class="t-title">APA 退房 · 行李帶往京成上野</div>
+            <p class="t-body">退房後不再把行李留在藏前；直接前往京成上野站，使用站內寄物櫃／人工寄存，下午可直接搭 Skyliner。</p>
             <p class="t-meal">早餐：飯店／便利商店</p>
           </div>
         </li>
         <li>
-          <div class="t-time">09:00–10:30</div>
+          <div class="t-time">備案 08:00–09:00</div>
           <div>
             <div class="t-title">（選）淺草寺</div>
-            <p class="t-body">飯店近淺草，時間夠可順路參拜、買少量伴手禮。人潮多時改走側街，勿拖延至中午以後。</p>
+            <p class="t-body">只有全員早起且行李整理完成才去；否則取消，直接前往京成上野寄行李。</p>
+            <span class="priority-tag optional">可刪景點</span>
           </div>
         </li>
         <li>
-          <div class="t-time">10:30–13:00</div>
+          <div class="t-time">09:30–13:15</div>
           <div>
             <div class="t-title">上野 · 阿美橫丁購物</div>
             <p class="t-body">藏前／淺草到上野很近。阿美橫丁買藥妝、零食、泡麵；控制體積與液體安檢規定。邊走邊吃可試試現炸メンチカツ（炸肉餅）或立食壽司／海鮮攤，都是阿美橫丁招牌小吃。</p>
             <ul class="t-steps">
-              <li>藏前／淺草 → 徒步或地鐵短程 → 上野</li>
+              <li>行李已寄放京成上野，不必返回藏前</li>
               <li>阿美橫丁掃貨（預留結帳與打包時間）</li>
             </ul>
             <p class="t-meal">午餐：メンチカツ／立食壽司／丼飯</p>
           </div>
         </li>
         <li>
-          <div class="t-time">13:00–14:00</div>
+          <div class="t-time">13:15–14:00</div>
           <div>
-            <div class="t-title">取行李 · 最後補給</div>
-            <p class="t-body">返回飯店取行李（若寄放），確認護照、機票與插座轉接頭皆已打包。</p>
+            <div class="t-title">京成上野取行李 · Skyliner 報到</div>
+            <p class="t-body">確認護照與機票，取行李後直接進站。車票可事先購買，避免現場排隊。</p>
           </div>
         </li>
         <li>
-          <div class="t-time">14:30–15:00</div>
+          <div class="t-time">最晚約 14:20</div>
           <div>
             <div class="t-title">出發前往成田空港</div>
-            <p class="t-body">建議約 <strong>14:00–14:30</strong> 動身（成田比羽田遠），為 18:35 班機預留電車＋報到＋安檢。國際線建議起飛前約 3 小時抵機場。</p>
+            <p class="t-body">搭京成 Skyliner 前往<strong>空港第 2 大樓站</strong>，目標 15:20 前抵達。華航櫃檯位於成田第 2 航廈 3F。</p>
             <ul class="t-steps">
-              <li>推薦：京成 Skyliner（上野／日暮里 → 成田，較快）</li>
+              <li>首選：京成上野 → Skyliner → 空港第 2 大樓</li>
               <li>或：JR 成田特快 N'EX（需另購票；周遊券已過期則不可免票）</li>
               <li>利木津巴士：行李多時可考慮，車程較長請更早出發</li>
             </ul>
@@ -2307,7 +2379,7 @@
           </div>
         </li>
         <li>
-          <div class="t-time">15:00–17:30</div>
+          <div class="t-time">15:10–17:30</div>
           <div>
             <div class="t-title">抵達機場 · 報到安檢</div>
             <p class="t-body">完成報到、託運、安檢與出境審查。剩餘時間可在免稅區休息。</p>
@@ -2384,7 +2456,7 @@
 
   <footer>
     <strong>東北旅繪</strong>
-    <p>依你家既定行程整理 · 最後更新 2026/8/4 · 祝一路平安、吃得開心。</p>
+    <p>依你家既定行程整理 · 最後更新 2026/8/7 · 祝一路平安、吃得開心。</p>
   </footer>
 
   <div class="offline-status" id="offlineStatus" role="status" aria-live="polite"></div>
@@ -2524,7 +2596,7 @@
         };
 
         maps.after(button, content);
-        setExpanded(!compactView.matches);
+        setExpanded(false);
         button.addEventListener("click", () => {
           setExpanded(button.getAttribute("aria-expanded") !== "true");
         });
@@ -2568,6 +2640,7 @@
       const todayTitle = document.getElementById("todayTitle");
       const todayContent = document.getElementById("todayContent");
       if (activeDetail && todayStatus && todayTitle && todayContent) {
+        if (dayControls.has(activeDetail.id)) dayControls.get(activeDetail.id)(true);
         todayStatus.textContent = todayLabel;
         todayTitle.textContent = activeDetail.querySelector(".detail-title")?.textContent || "今日行程";
 
@@ -2607,8 +2680,40 @@
         });
       });
 
+      const NOTE_KEY = "tohoku-travel-notes-v1";
+      let travelNotes = {};
+      try { travelNotes = JSON.parse(localStorage.getItem(NOTE_KEY) || "{}"); } catch (e) { travelNotes = {}; }
+      document.querySelectorAll("[data-travel-note]").forEach((input) => {
+        const key = input.dataset.travelNote;
+        input.value = travelNotes[key] || "";
+        input.addEventListener("change", () => {
+          travelNotes[key] = input.value.trim();
+          try { localStorage.setItem(NOTE_KEY, JSON.stringify(travelNotes)); } catch (e) { /* ignore */ }
+        });
+      });
+
       document.querySelectorAll("img").forEach((img) => {
         img.decoding = "async";
+      });
+
+      const hotelAddresses = {
+        "仙台住宿": "KOKO HOTEL 仙台駅前 West\n〒980-0021 宮城県仙台市青葉区中央3-8-27",
+        "盛岡住宿": "GRIDS PREMIUM HOTEL MORIOKA\n〒020-0033 岩手県盛岡市盛岡駅前北通3-6",
+        "東京住宿": "アパホテル〈浅草 蔵前〉\n〒111-0043 東京都台東区駒形2-4-6\nTEL 0570-024-911"
+      };
+      document.querySelectorAll(".booking-table tbody tr").forEach((row) => {
+        const label = row.cells?.[0]?.textContent.trim();
+        const value = hotelAddresses[label];
+        if (!value || !row.cells?.[1]) return;
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.className = "copy-btn";
+        copy.textContent = "複製日文地址";
+        copy.addEventListener("click", async () => {
+          try { await navigator.clipboard.writeText(value); showStatus("已複製日文地址，可貼給車站或計程車人員。"); }
+          catch (e) { showStatus("無法自動複製，請長按地址文字複製。"); }
+        });
+        row.cells[1].append(document.createElement("br"), copy);
       });
 
       const offlineStatus = document.getElementById("offlineStatus");
@@ -2643,6 +2748,35 @@
             .catch(() => { /* 離線功能不可用時維持一般網頁模式 */ });
         });
       }
+
+      const offlineDownload = document.getElementById("offlineDownload");
+      offlineDownload?.addEventListener("click", async () => {
+        if (!("serviceWorker" in navigator)) return showStatus("此瀏覽器不支援離線下載。");
+        offlineDownload.disabled = true;
+        offlineDownload.textContent = "正在下載…";
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          const urls = [
+            "./", "./index.html", "./manifest.json", "./favicon.svg",
+            "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png",
+            ...[...document.querySelectorAll("img")].map((img) => img.getAttribute("src")).filter(Boolean)
+          ];
+          (registration.active || navigator.serviceWorker.controller)?.postMessage({ type: "CACHE_URLS", urls: [...new Set(urls)] });
+          showStatus("完整離線包下載中；約 5.5 MB，完成後會提示。");
+        } catch (e) {
+          showStatus("離線下載失敗，請保持網路後再試一次。");
+          offlineDownload.disabled = false;
+          offlineDownload.textContent = "下載完整離線包";
+        }
+      });
+      navigator.serviceWorker?.addEventListener("message", (event) => {
+        if (event.data?.type !== "CACHE_COMPLETE") return;
+        showStatus(event.data.ok ? "完整離線包已下載，可在無網路時查看。" : "部分檔案下載失敗，請連線後重試。");
+        if (offlineDownload) {
+          offlineDownload.disabled = false;
+          offlineDownload.textContent = event.data.ok ? "重新下載離線包" : "重試離線下載";
+        }
+      });
     })();
   </script>
 </body>
