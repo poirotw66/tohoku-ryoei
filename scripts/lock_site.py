@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Encrypt index.source.html into a password-gated index.html for GitHub Pages."""
+"""Encrypt the Jekyll-excluded source into a password-gated index.html."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "index.source.html"
+SOURCE = ROOT / "_source" / "index.html"
 OUTPUT = ROOT / "index.html"
 PASSWORD_FILE = ROOT / ".site-password"
 ITERATIONS = 260_000
@@ -161,12 +161,11 @@ def unlocker_page(payload: dict[str, str]) -> str:
       <button type="submit">進入行程</button>
       <p class="err" id="err" role="alert">密碼不正確，請再試一次。</p>
     </form>
-    <p class="hint">提示：正確密碼會暫存在這台裝置，之後約 14 天內不必重輸。</p>
+    <p class="hint">提示：密碼只保留在目前瀏覽工作階段；關閉分頁後需重新輸入。</p>
   </main>
   <script>
     const PAYLOAD = {blob};
     const SESSION_KEY = "tohoku-family-unlocked-v1";
-    const DAYS = 14;
 
     async function deriveKey(password, saltB64, iterations) {{
       const enc = new TextEncoder();
@@ -192,15 +191,8 @@ def unlocker_page(payload: dict[str, str]) -> str:
     }}
 
     function remember(password) {{
-      const until = Date.now() + DAYS * 24 * 60 * 60 * 1000;
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({{ until }}));
-      try {{
-        localStorage.setItem(SESSION_KEY, JSON.stringify({{
-          until,
-          // ponytail: store password locally for convenience on trusted family devices only
-          p: password
-        }}));
-      }} catch (e) {{}}
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({{ p: password }}));
+      try {{ localStorage.removeItem(SESSION_KEY); }} catch (e) {{}}
     }}
 
     function siteBase() {{
@@ -238,16 +230,17 @@ def unlocker_page(payload: dict[str, str]) -> str:
 
     (async function boot() {{
       try {{
-        const raw = localStorage.getItem(SESSION_KEY);
+        localStorage.removeItem(SESSION_KEY);
+        const raw = sessionStorage.getItem(SESSION_KEY);
         if (!raw) return;
         const saved = JSON.parse(raw);
-        if (!saved.until || saved.until < Date.now() || !saved.p) {{
-          localStorage.removeItem(SESSION_KEY);
+        if (!saved.p) {{
+          sessionStorage.removeItem(SESSION_KEY);
           return;
         }}
         await tryUnlock(saved.p, false);
       }} catch (e) {{
-        localStorage.removeItem(SESSION_KEY);
+        sessionStorage.removeItem(SESSION_KEY);
       }}
     }})();
 
@@ -287,7 +280,7 @@ def main() -> None:
     OUTPUT.write_text(unlocker_page(payload), encoding="utf-8")
     PASSWORD_FILE.write_text(password + "\n", encoding="utf-8")
     print(f"Locked OK -> {OUTPUT.name} ({OUTPUT.stat().st_size} bytes)")
-    print("Edit index.source.html next time, then run: python scripts/lock_site.py")
+    print("Edit _source/index.html next time, then run: python scripts/lock_site.py")
 
 
 if __name__ == "__main__":
