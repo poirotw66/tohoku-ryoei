@@ -1,0 +1,8 @@
+# Legacy GitHub Pages (branch deploy + Jekyll).
+# Underscore folders like _source/ are excluded by Jekyll by default.
+# Keep tooling and docs out of the published tree as well.
+exclude:
+  - scripts
+  - README.md
+  - .gitignore
+  - .github

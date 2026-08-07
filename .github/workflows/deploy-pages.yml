@@ -1,0 +1,53 @@
+# Deploy static site to GitHub Pages without publishing _source/ (plaintext).
+# Requires: Settings → Pages → Source = "GitHub Actions"
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare publish directory
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          # Copy publishable root files only (exclude plaintext + tooling).
+          for path in *; do
+            case "$path" in
+              _source|scripts|_site|.git|.github) continue ;;
+            esac
+            cp -a "$path" _site/
+          done
+          # Artifact is already filtered; skip Jekyll on Pages.
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
