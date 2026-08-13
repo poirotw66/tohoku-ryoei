@@ -657,6 +657,31 @@
       background: linear-gradient(transparent, rgba(14, 28, 26, 0.72));
       color: var(--steam); font-size: 0.72rem; font-weight: 500;
     }
+    .travel-photo-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .travel-photo-grid figure {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--fog);
+    }
+    .travel-photo-grid img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .travel-photo-grid figure:hover img { transform: scale(1.03); }
+    .travel-photo-grid figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 0.85rem 1rem;
+      background: linear-gradient(transparent, rgba(14, 28, 26, 0.72));
+      color: var(--steam); font-size: 0.82rem; font-weight: 500;
+    }
+    @media (min-width: 560px) {
+      .travel-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
 
     .timeline { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .timeline li {
@@ -1560,13 +1585,13 @@
         <p>今天落地成田機場時，窗外正下著雨。隔著航廈玻璃看出去，停機坪被雨水洗得發亮，JAL 飛機和地勤車輛在灰藍色天色裡忙碌。雖然沒有晴朗天空，卻留下了這趟旅程第一個很有記憶點的抵達畫面。</p>
         <p class="t-tip">雨天提醒：傘與防水袋先放在隨身包外層；前往仙台的轉乘與入住以安全、順利為優先。</p>
       </aside>
-      <div class="photo-strip">
+      <div class="travel-photo-grid" aria-label="成田機場雨天照片">
         <figure>
-          <img src="images/narita-rain-arrival-1.jpg" alt="雨中的成田機場停機坪與 JAL 客機" width="1280" height="960" loading="eager">
+          <img src="images/narita-rain-arrival-1.jpg?v=20260813" alt="雨中的成田機場停機坪與 JAL 客機" width="1280" height="960" loading="eager">
           <figcaption>成田落地：雨中的停機坪與 JAL 客機</figcaption>
         </figure>
         <figure>
-          <img src="images/narita-rain-arrival-2.jpg" alt="雨天從成田航廈望向停機坪" width="1280" height="960" loading="eager">
+          <img src="images/narita-rain-arrival-2.jpg?v=20260813" alt="雨天從成田航廈望向停機坪" width="1280" height="960" loading="eager">
           <figcaption>窗外的成田機場 · 灰藍雨幕</figcaption>
         </figure>
       </div>
