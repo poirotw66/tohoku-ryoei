@@ -1,4 +1,4 @@
-const CACHE_NAME = "tohoku-ryoei-v3";
+const CACHE_NAME = "tohoku-ryoei-v4";
 const CORE_FILES = [
   "./",
   "./index.html",

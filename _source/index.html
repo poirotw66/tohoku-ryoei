@@ -582,6 +582,29 @@
       background: linear-gradient(transparent, rgba(14, 28, 26, 0.75));
       color: var(--steam); font-size: 0.85rem; font-weight: 500;
     }
+    .travel-note {
+      margin: 0 0 1.75rem;
+      padding: 1.25rem 1.35rem;
+      border-left: 3px solid var(--coral);
+      background: linear-gradient(135deg, #eef5f2, #f7faf8);
+    }
+    .travel-note-kicker {
+      margin-bottom: 0.25rem;
+      color: var(--coral);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+    .travel-note h4 {
+      margin-bottom: 0.45rem;
+      color: var(--pine-deep);
+      font: 700 1.2rem/1.45 var(--font-display);
+    }
+    .travel-note p {
+      color: #3d524c;
+      font-size: 0.9rem;
+    }
+    .travel-note p:last-child { margin-bottom: 0; }
 
     .photo-grid {
       display: grid; gap: 0.75rem; margin-bottom: 1.75rem;
@@ -1092,7 +1115,7 @@
         </div>
       </div>
       <button type="button" class="offline-download" id="offlineDownload">下載完整離線包</button>
-      <p class="trip-updated">行程最後更新：<time datetime="2026-08-07">2026/8/7</time> · 出發前仍請確認指定席、天氣與臨時運行資訊。</p>
+      <p class="trip-updated">行程最後更新：<time datetime="2026-08-13">2026/8/13</time> · 旅途中持續補上照片與札記；仍請確認指定席、天氣與臨時運行資訊。</p>
     </div>
   </section>
 
@@ -1488,12 +1511,16 @@
         <span>華航 CI · 07:55→12:35</span>
         <span>東北新幹線</span>
         <span>住宿：KOKO 仙台駅前 West</span>
+        <span>成田落地：雨天</span>
       </div>
       <div class="day-maps">
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%88%90%E7%94%B0%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF" target="_blank" rel="noopener noreferrer">成田空港</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+%E4%BB%99%E5%8F%B0%E9%A7%85%E5%89%8DWest" target="_blank" rel="noopener noreferrer">KOKO 飯店</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E7%89%9B%E3%81%9F%E3%82%93%E5%96%84%E6%B2%BB%E9%83%8E+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">善治郎</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=AER+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">AER</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E9%A7%85+%E3F+%E3%81%9A%E3%82%93%E3%81%A0%E5%B0%8F%E5%BE%91" target="_blank" rel="noopener noreferrer">ずんだ小徑</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A8%E3%83%B3%E3%83%89%E3%83%BC%E9%A4%85%E5%BA%97+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">遠藤餅店</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%91%E4%B8%8A%E5%B1%8B%E9%A4%85%E5%BA%97+%E4%BB%99%E5%8F%B0" target="_blank" rel="noopener noreferrer">村上屋餅店</a>
       </div>
       <div class="photo-grid">
         <figure>
@@ -1525,6 +1552,22 @@
         <figure>
           <img src="images/japan-street.webp" alt="名掛丁商店街氛圍" width="800" height="600" loading="lazy">
           <figcaption>名掛丁散步</figcaption>
+        </figure>
+      </div>
+      <aside class="travel-note" aria-labelledby="day1-note-title">
+        <p class="travel-note-kicker">旅途札記 · 2026/8/13</p>
+        <h4 id="day1-note-title">雨中的成田，旅程正式開始</h4>
+        <p>今天落地成田機場時，窗外正下著雨。隔著航廈玻璃看出去，停機坪被雨水洗得發亮，JAL 飛機和地勤車輛在灰藍色天色裡忙碌。雖然沒有晴朗天空，卻留下了這趟旅程第一個很有記憶點的抵達畫面。</p>
+        <p class="t-tip">雨天提醒：傘與防水袋先放在隨身包外層；前往仙台的轉乘與入住以安全、順利為優先。</p>
+      </aside>
+      <div class="photo-strip">
+        <figure>
+          <img src="images/narita-rain-arrival-1.jpg" alt="雨中的成田機場停機坪與 JAL 客機" width="1280" height="960" loading="eager">
+          <figcaption>成田落地：雨中的停機坪與 JAL 客機</figcaption>
+        </figure>
+        <figure>
+          <img src="images/narita-rain-arrival-2.jpg" alt="雨天從成田航廈望向停機坪" width="1280" height="960" loading="eager">
+          <figcaption>窗外的成田機場 · 灰藍雨幕</figcaption>
         </figure>
       </div>
       <ol class="timeline">
@@ -1577,15 +1620,24 @@
           </div>
         </li>
         <li>
-          <div class="t-time">19:00–20:30</div>
+          <div class="t-time">19:00–20:00</div>
           <div>
             <div class="t-title">站前晚餐 · 名掛丁商店街（選）</div>
-            <p class="t-body">優先吃善治郎牛舌或站前定食；有體力再短逛名掛丁。抵達晚或排隊過長時，直接用餐後回飯店。</p>
+            <p class="t-body">優先吃善治郎牛舌或站前定食；雨天或抵達較晚時，直接用餐後前往下一站，避免在戶外久留。</p>
             <span class="priority-tag">必做：入住＋晚餐</span><span class="priority-tag optional">可刪：商店街</span>
           </div>
         </li>
         <li>
-          <div class="t-time">20:00–20:45</div>
+          <div class="t-time">20:00–20:25</div>
+          <div>
+            <div class="t-title">雨天甜點 · 仙台站 3F「ずんだ小徑」</div>
+            <p class="t-body">把仙台代表性的毛豆甜點補進抵達日：首選「ずんだ茶寮」的ずんだシェイク或ずんだ餅；全程在車站內，適合今天的雨天。物販約 9:00–21:00，咖啡區請依現場公告。</p>
+            <p class="t-meal">甜點：ずんだシェイク／ずんだ餅</p>
+            <span class="priority-tag">雨天推薦</span>
+          </div>
+        </li>
+        <li>
+          <div class="t-time">20:25–20:45</div>
           <div>
             <div class="t-title">AER 展望台</div>
             <p class="t-body">只在抵達順利且家人體力充足時前往；否則取消，不影響後續行程。</p>
@@ -2417,9 +2469,9 @@
         <article class="food-item">
           <figure><img src="images/japan-street.webp" alt="仙台商店街氛圍" width="600" height="450" loading="lazy"></figure>
           <p class="food-when">DAY 1 晚上</p>
-          <h3 class="food-name">仙台 · ずんだ餅</h3>
-          <p class="food-desc">仙台最具代表性的甜點：毛豆泥包裹麻糬，微鹹回甘，名掛丁商店街隨處買得到。</p>
-          <p class="food-loc">名掛丁商店街</p>
+          <h3 class="food-name">仙台 · ずんだ甜點</h3>
+          <p class="food-desc">仙台最具代表性的毛豆甜點。首選仙台站 3F「ずんだ小徑」：可吃ずんだ餅、喝ずんだシェイク，也方便買伴手禮。</p>
+          <p class="food-loc">加碼：遠藤餅店（宮町；8/16–8/22 夏休業，若要去請排 8/14–8/15）<br>村上屋餅店（北目町；出發前確認營業）</p>
         </article>
         <article class="food-item">
           <figure><img src="images/seafood.webp" alt="海鮮丼" width="600" height="450" loading="lazy"></figure>
@@ -2456,7 +2508,7 @@
 
   <footer>
     <strong>東北旅繪</strong>
-    <p>依你家既定行程整理 · 最後更新 2026/8/7 · 祝一路平安、吃得開心。</p>
+    <p>依你家既定行程整理 · 最後更新 2026/8/13 · 旅途中持續補上照片與札記。</p>
   </footer>
 
   <div class="offline-status" id="offlineStatus" role="status" aria-live="polite"></div>
