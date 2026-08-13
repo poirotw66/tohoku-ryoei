@@ -683,6 +683,11 @@
       .travel-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .travel-photo-grid.single { grid-template-columns: minmax(0, 1fr); max-width: 54rem; }
     }
+    .travel-photo-grid.dinner figure {
+      aspect-ratio: 3 / 4;
+      background: #18211f;
+    }
+    .travel-photo-grid.dinner img { object-fit: contain; }
 
     .timeline { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .timeline li {
@@ -1608,6 +1613,34 @@
           <figcaption>已取票：JR EAST PASS 與兩張指定席票券</figcaption>
         </figure>
       </div>
+      <aside class="travel-note" aria-labelledby="dinner-note-title">
+        <p class="travel-note-kicker">晚餐紀錄 · 2026/8/13</p>
+        <h4 id="dinner-note-title">仙台第一晚的豐盛晚餐</h4>
+        <p>辦理入住後，今晚坐下來好好吃一頓：炭烤鯖魚、牛舌、關東煮與天婦羅，配上一杯冰啤酒。長途移動後的第一頓仙台晚餐，熱騰騰又很有在地旅行的味道。</p>
+        <p class="t-tip">今日餐桌：炭烤鯖魚／牛舌／關東煮／天婦羅／啤酒。</p>
+      </aside>
+      <div class="travel-photo-grid dinner" aria-label="仙台第一晚晚餐照片">
+        <figure>
+          <img src="images/day1-dinner-1.jpg?v=20260813-dinner" alt="晚餐的炭烤鯖魚" width="1350" height="1800" loading="lazy">
+          <figcaption>炭烤鯖魚</figcaption>
+        </figure>
+        <figure>
+          <img src="images/day1-dinner-2.jpg?v=20260813-dinner" alt="晚餐的牛舌" width="1350" height="1800" loading="lazy">
+          <figcaption>牛舌</figcaption>
+        </figure>
+        <figure>
+          <img src="images/day1-dinner-3.jpg?v=20260813-dinner" alt="晚餐的關東煮與煮物" width="1350" height="1800" loading="lazy">
+          <figcaption>關東煮與煮物</figcaption>
+        </figure>
+        <figure>
+          <img src="images/day1-dinner-4.jpg?v=20260813-dinner" alt="晚餐的天婦羅拼盤" width="1350" height="1800" loading="lazy">
+          <figcaption>天婦羅拼盤</figcaption>
+        </figure>
+        <figure>
+          <img src="images/day1-dinner-5.jpg?v=20260813-dinner" alt="晚餐桌上的啤酒與小菜" width="1011" height="1800" loading="lazy">
+          <figcaption>啤酒與小菜</figcaption>
+        </figure>
+      </div>
       <ol class="timeline">
         <li>
           <div class="t-time">05:30–07:00</div>
@@ -1660,9 +1693,10 @@
         <li>
           <div class="t-time">19:00–20:00</div>
           <div>
-            <div class="t-title">站前晚餐 · 名掛丁商店街（選）</div>
-            <p class="t-body">優先吃善治郎牛舌或站前定食；雨天或抵達較晚時，直接用餐後前往下一站，避免在戶外久留。</p>
-            <span class="priority-tag">必做：入住＋晚餐</span><span class="priority-tag optional">可刪：商店街</span>
+            <div class="t-title">晚餐紀錄 · 烤魚、牛舌與天婦羅</div>
+            <p class="t-body">入住後享用今天在仙台的第一頓晚餐：炭烤鯖魚、牛舌、關東煮與天婦羅，配啤酒。長途移動後坐下來吃熱食，替抵達日畫下滿足的句點。</p>
+            <p class="t-meal">晚餐：炭烤鯖魚／牛舌／關東煮／天婦羅</p>
+            <span class="priority-tag">已完成</span>
           </div>
         </li>
         <li>
