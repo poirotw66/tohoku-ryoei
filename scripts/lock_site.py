@@ -161,11 +161,11 @@ def unlocker_page(payload: dict[str, str]) -> str:
       <button type="submit">進入行程</button>
       <p class="err" id="err" role="alert">密碼不正確，請再試一次。</p>
     </form>
-    <p class="hint">提示：密碼只保留在目前瀏覽工作階段；關閉分頁後需重新輸入。</p>
+    <p class="hint">提示：第一次輸入後，密碼會記在這台裝置的瀏覽器；清除網站資料或更換裝置後需重新輸入。</p>
   </main>
   <script>
     const PAYLOAD = {blob};
-    const SESSION_KEY = "tohoku-family-unlocked-v1";
+    const SESSION_KEY = "tohoku-family-unlocked-v2";
 
     async function deriveKey(password, saltB64, iterations) {{
       const enc = new TextEncoder();
@@ -191,8 +191,18 @@ def unlocker_page(payload: dict[str, str]) -> str:
     }}
 
     function remember(password) {{
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({{ p: password }}));
+      const value = JSON.stringify({{ p: password }});
+      try {{
+        localStorage.setItem(SESSION_KEY, value);
+        sessionStorage.removeItem(SESSION_KEY);
+      }} catch (e) {{
+        try {{ sessionStorage.setItem(SESSION_KEY, value); }} catch (ignored) {{}}
+      }}
+    }}
+
+    function forget() {{
       try {{ localStorage.removeItem(SESSION_KEY); }} catch (e) {{}}
+      try {{ sessionStorage.removeItem(SESSION_KEY); }} catch (e) {{}}
     }}
 
     function siteBase() {{
@@ -230,17 +240,16 @@ def unlocker_page(payload: dict[str, str]) -> str:
 
     (async function boot() {{
       try {{
-        localStorage.removeItem(SESSION_KEY);
-        const raw = sessionStorage.getItem(SESSION_KEY);
+        const raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
         if (!raw) return;
         const saved = JSON.parse(raw);
         if (!saved.p) {{
-          sessionStorage.removeItem(SESSION_KEY);
+          forget();
           return;
         }}
         await tryUnlock(saved.p, false);
       }} catch (e) {{
-        sessionStorage.removeItem(SESSION_KEY);
+        forget();
       }}
     }})();
 
