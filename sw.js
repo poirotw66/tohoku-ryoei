@@ -1,4 +1,4 @@
-const CACHE_NAME = "tohoku-ryoei-v4";
+const CACHE_NAME = "tohoku-ryoei-v5";
 const CORE_FILES = [
   "./",
   "./index.html",
@@ -38,7 +38,7 @@ self.addEventListener("fetch", (event) => {
     const isAppShell = url.pathname.endsWith("/") || /\/index(?:\.html)?$/.test(url.pathname);
     if (!isAppShell) return;
     event.respondWith(
-      fetch(request)
+      fetch(new Request(request, { cache: "no-store" }))
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
