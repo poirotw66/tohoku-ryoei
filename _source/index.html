@@ -681,6 +681,7 @@
     }
     @media (min-width: 560px) {
       .travel-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .travel-photo-grid.single { grid-template-columns: minmax(0, 1fr); max-width: 54rem; }
     }
 
     .timeline { list-style: none; display: flex; flex-direction: column; gap: 0; }
@@ -1126,7 +1127,7 @@
       <h2 class="trip-now-title" id="todayTitle">正在整理今日行程</h2>
       <div id="todayContent" aria-live="polite"></div>
       <div class="essential-grid" aria-label="旅途關鍵資訊">
-        <div class="essential-card"><strong>交通票券</strong><p>JR EAST PASS 東北地區 · 成人 ¥35,000 · 8/13–8/17 連續使用</p><span class="priority-tag">指定席立即預約</span></div>
+        <div class="essential-card"><strong>交通票券</strong><p>JR EAST PASS 東北地區 · 成人 ¥35,000 · 8/13–8/17 連續使用</p><span class="priority-tag backup">已取 JR PASS／指定席已劃</span></div>
         <div class="essential-card"><strong>返程航廈</strong><p>華航 CI · 成田空港第 2 航廈 3F · 8/19 18:35</p><span class="priority-tag">15:20 前抵達</span></div>
         <div class="essential-card"><strong>緊急資訊</strong><p>日本警察 110 · 救護／消防 119 · 旅外急難 +81-3-3280-7917</p><span class="priority-tag backup">離線可查</span></div>
       </div>
@@ -1151,7 +1152,7 @@
 
     <div class="prep-banner">
       <strong>出發日：2026/8/13（四）· 華航高雄 → 成田</strong>
-      <p>返程 8/19（三）18:35 自成田第 2 航廈起飛。使用 <strong>JR EAST PASS（東北地區）5 日，成人 ¥35,000</strong>，8/13–8/17 連續啟用（含 N'EX、東北／北陸新幹線、鳴子與猊鼻溪）。8/18–8/19 京王線、地鐵與返程 Skyliner 另購票。8/7–8/16 為盂蘭盆尖峰，長途指定席請立即預約。</p>
+      <p>返程 8/19（三）18:35 自成田第 2 航廈起飛。使用 <strong>JR EAST PASS（東北地區）5 日，成人 ¥35,000</strong>，8/13–8/17 連續啟用（含 N'EX、東北／北陸新幹線、鳴子與猊鼻溪）。Day 1 N'EX 與東京→仙台指定席已取得；Day 4／Day 5 長途指定席仍請確認。8/18–8/19 京王線、地鐵與返程 Skyliner 另購票。</p>
     </div>
 
     <h3 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">預訂現況</h3>
@@ -1239,7 +1240,7 @@
         <div class="when">出發當天</div>
         <div class="what">
           <strong>高雄機場 · 07:55 起飛 → 成田</strong>
-          國際線建議起飛前 2.5–3 小時到機場。抵成田後換 JR 東北周遊券 → 劃 N'EX 與新幹線 → 東京站轉東北新幹線往仙台 → 入住 KOKO HOTEL。
+          國際線建議起飛前 2.5–3 小時到機場。抵成田後取 JR EAST PASS → 使用已劃好的 N'EX 與新幹線指定席 → 東京站轉東北新幹線往仙台 → 入住 KOKO HOTEL。
         </div>
       </li>
     </ol>
@@ -1262,8 +1263,8 @@
         <h3>交通與通訊</h3>
         <ul class="check-list" data-prep="transit">
           <li class="is-done"><input type="checkbox" id="p8" checked disabled><label for="p8">JR 東日本周遊券（東北）5 日已決定<span class="done-tag">已決定</span></label></li>
-          <li><input type="checkbox" id="p8b"><label for="p8b">周遊券已線上購買／兌換單存好（建議啟用 8/13–8/17）</label></li>
-          <li><input type="checkbox" id="p9"><label for="p9">成田→東京（N'EX）與東京→仙台新幹線劃位（Day 1）</label></li>
+          <li class="is-done"><input type="checkbox" id="p8b" checked disabled><label for="p8b">JR EAST PASS 已取票（效期 8/13–8/17）<span class="done-tag">已取票</span></label></li>
+          <li class="is-done"><input type="checkbox" id="p9" checked disabled><label for="p9">成田→東京（N'EX）與東京→仙台新幹線已劃位（Day 1）<span class="done-tag">已劃位</span></label></li>
           <li><input type="checkbox" id="p9b"><label for="p9b">仙台→一ノ関→盛岡指定席、猊鼻溪 JR／船班銜接確認（Day 4）</label></li>
           <li><input type="checkbox" id="p10"><label for="p10">盛岡→輕井澤→東京劃位（Day 5）</label></li>
           <li><input type="checkbox" id="p10b"><label for="p10b">確認 APA 可代收宅配，8/16 從 KOKO 寄出大行李</label></li>
@@ -1595,6 +1596,18 @@
           <figcaption>窗外的成田機場 · 灰藍雨幕</figcaption>
         </figure>
       </div>
+      <aside class="travel-note" aria-labelledby="jr-pass-note-title">
+        <p class="travel-note-kicker">交通紀錄 · 2026/8/13</p>
+        <h4 id="jr-pass-note-title">順利取到 JR EAST PASS</h4>
+        <p>在成田機場完成 JR EAST PASS（東北地區・普通車 5 日券）取票，效期為 8/13–8/17，票價 ¥35,000。同時把今天前往仙台的指定席也劃好了，旅程的主要交通安排正式就緒。</p>
+        <p class="t-tip">已取得：成田機場第 2、3 航廈 → 東京 N'EX 26（13:48–14:45，8 號車 2-D）；東京 → 仙台（15:20–16:51，13 號車 13-B）。</p>
+      </aside>
+      <div class="travel-photo-grid single" aria-label="JR EAST PASS 與指定席票券照片">
+        <figure>
+          <img src="images/jr-pass-pickup.jpg?v=20260813-pass" alt="已取到的 JR EAST PASS 與成田至東京、東京至仙台指定席票券" width="1800" height="1350" loading="lazy">
+          <figcaption>已取票：JR EAST PASS 與兩張指定席票券</figcaption>
+        </figure>
+      </div>
       <ol class="timeline">
         <li>
           <div class="t-time">05:30–07:00</div>
@@ -1614,14 +1627,14 @@
         <li>
           <div class="t-time">12:35–15:00</div>
           <div>
-            <div class="t-title">成田空港 · 換周遊券 · 轉往東京</div>
-            <p class="t-body">入境領行李後，至 JR 東日本旅行服務中心／綠色窗口<strong>兌換 JR 東日本鐵路周遊券（東北地區）5 日</strong>，建議當日啟用（用至 8/17）。</p>
+            <div class="t-title">成田空港 · 取 JR PASS · 轉往東京</div>
+            <p class="t-body">今天已在 JR 東日本旅行服務中心／綠色窗口<strong>取到 JR EAST PASS（東北地區）5 日券</strong>，效期 8/13–8/17；並完成 N'EX 與東京→仙台新幹線指定席劃位。</p>
             <ul class="t-steps">
-              <li>劃位：<strong>成田特快 N'EX</strong> → 東京站（約 60 分；周遊券適用）</li>
-              <li>同日劃位：東京 → 仙台東北新幹線（はやぶさ／やまびこ）</li>
+              <li><strong>N'EX 26</strong>：成田機場第 2、3 航廈 13:48 → 東京 14:45，8 號車 2-D</li>
+              <li><strong>東京 → 仙台</strong>：15:20 → 16:51，13 號車 13-B</li>
               <li>啟用 eSIM／Wi-Fi；大行李放新幹線大型置物區</li>
             </ul>
-            <p class="t-tip">8/13 正值盂蘭盆移動尖峰；N'EX 與東京→仙台請事前劃位。若入境或換票延誤，以入住與晚餐為主。</p>
+            <p class="t-tip">票券已備妥；仍請依現場指示確認月台與轉乘時間。</p>
           </div>
         </li>
         <li>
