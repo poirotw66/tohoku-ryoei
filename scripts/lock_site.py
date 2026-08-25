@@ -60,7 +60,7 @@ def unlocker_page(payload: dict[str, str]) -> str:
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e3d34">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://poirotw66.github.io/tohoku-ryoei/">
+  <meta property="og:url" content="https://www.bloss0m.com/tohoku-ryoei/">
   <meta property="og:title" content="東北旅繪 · 家人專用">
   <meta property="og:description" content="家族東北行程（需密碼），點開後輸入通行密碼即可查看。">
   <meta name="twitter:card" content="summary">
